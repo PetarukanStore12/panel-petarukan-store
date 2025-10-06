@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://rawcdn.githack.com/NeroKode-id/Nkey/96b970cd796dd70a32020c56fe976d296ab85a91/css.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet" href="https://rawcdn.githack.com/NeroKode-id/Nkey/803f95cdffda7967decb1096127615b783cff4a6/fontstyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Home Konter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+        :root{
+           --main:#14116C;
+        }
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            
+            border: 0;
+            padding: 0;
+            background: white;
+        }
+button, a {
+    outline: none; 
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+        
+        .notification {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 27px;
+        font-size: 13px;
+        background: #fff;
+        color: black;
+        text-align: center;
+        line-height: 27px;
+        display: flex;
+        align-items: center;
+        border-radius: 100px;
+        justify-content: center;
+        overflow: hidden;
+        opacity: 0;
+        z-index: 11;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        animation: expand 1s ease-out forwards, hide 1s ease-out 3s forwards;
+    }
+    .notification img {
+      width: 20px;
+      height: 20px;
+      margin: 3px 5px;
+    }
+    .notification h5 {
+      font-size: 13px;
+      margin: 0;
+    }
+    .hidden {
+        opacity: 0;
+    }
+    .online {
+        color: var(--primary);
+    }
+    .offline {
+        color: red;
+    }
+    @keyframes expand {
+        0% {
+            width: 50px;
+            opacity: 0;
+        }
+        50% {
+            width: 200px;
+            opacity: 1;
+        }
+        100% {
+            width: 200px;
+            opacity: 1;
+        }
+    }
+    @keyframes hide {
+        0% {
+            opacity: 1;
+            width: 200px;
+        }
+        100% {
+            opacity: 0;
+            width: 50px;
+        }
+    }
+        .w-max{
+            width: 100%;
+        }
+        .container{
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+        .fil-w{
+            filter: invert(100%) sepia(0%) saturate(7453%) hue-rotate(4deg) brightness(96%) contrast(106%);
+        }
+        .fil-u{
+            
+        }
+        .the-header{
+            color: white;
+            padding: 15px;
+            padding-left: 18px;
+            padding-right: 18px;
+            background: var(--main);
+            border-radius: 0px 0px 35px 35px;
+        }
+        .the-nav{
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .the-nav p{
+            font-size: 12px;
+            font-weight: 400;
+            opacity: .7;
+        }
+        .the-nav h5{
+            
+            font-size: 17px;
+            font-weight: 500;
+            width: 100%;
+        }
+        .the-nav .profil{
+            width: 35px;
+            height: 35px;
+            margin-left: 15px;
+        }
+        .the-center {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .the-center h5{
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .the-center p{
+            font-size: 11px;
+            font-weight: 500;
+            opacity: .7;
+        }
+        .the-center .bell,
+        .the-center .chat{
+            width: 25px;
+            height: 25px;
+            margin-left: 10px;
+        }
+        .the-center button{
+            border: none;
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            text-align: left;
+            width: 100%;
+        }
+.the-menu-first {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    background: #fff;
+    padding: 12px;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+.the-menu-first a {
+    text-align: center;
+}
+
+.the-menu-first button {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: center;
+}
+
+.the-menu-first img {
+    width: 27px;
+    height: 27px;
+}
+
+.the-menu-first p {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+
+swiper-container {
+      width: 100%;
+      height: 100%;
+      margin-top: 20px;
+    }
+
+    swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      border-radius: 15px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    swiper-slide img {
+      display: block;
+      width: 100%;
+      border-radius: 15px;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    swiper-slide {
+      width: 90%;
+    }
+    .layanan-text{
+        font-size: 14px;
+        font-weight: bold;
+        font-family: "Quicksand", sans-serif;
+        margin-top: 15px;
+    }
+.the-menu-main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    background: #fff;
+    margin-top: 20px;
+}
+
+.the-menu-main a {
+    text-align: center;
+}
+
+.the-menu-main button {
+    width: 100%;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: center;
+}
+
+.the-menu-main img {
+    width: 40px;
+    height: 40px;
+}
+
+.the-menu-main p {
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-bottom: 15px;
+}
+hr{
+    height: 7px;
+    border: none;
+    background: #f2f6f9;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 100px;
+}
+.nominal-tabungan h3,.nominal-tabungan h6{
+    margin-top: 5px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.nominal-tabungan h3{
+    font-weight: bold;
+    background: var(--main);
+    color: white;
+    border-radius: 100px;
+    padding: 2px 5px 2px 5px;
+    margin-right: 5px;
+}
+.balance h3,.balance h6{
+    margin-top: 5px;
+    font-size: 10px;
+    font-weight: bold;
+}
+.balance h3{
+    font-weight: bold;
+    background: var(--main);
+    color: white;
+    border-radius: 100px;
+    padding: 2px 5px 2px 5px;
+    margin-right: 5px;
+}
+#notifBox {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: 27px;
+    font-size: 13px;
+    background: orangered;
+    color: white;
+    text-align: center;
+    line-height: 27px;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    justify-content: center;
+    overflow: hidden;
+    padding-right: 10px;
+    padding-left: 10px;
+    opacity: 0;
+    z-index: 11;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    animation: expand 3s ease-out forwards;
+    font-weight: bold;
+    }
+    @keyframes expand {
+    0% {
+        width: 50px;
+        opacity: 0;
+    }
+    50% {
+        width: 200px;
+        opacity: 1;
+    }
+    100% {
+        width: 200px;
+        opacity: 1;
+    }
+}
+.secure{
+    padding: 14px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    border-top: 1px solid #f1f1f1;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .header-scure{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .shield-img{
+    width: 30px;
+  }
+  .header-scure h5{
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .header-scure p{
+    font-size: 11px;
+    margin: 0;
+  }
+  .lindungi{
+    display: flex;
+    border: 1px solid #42a5f5;
+    border-radius: 4px;
+    gap: 4px;
+    align-items: center;
+    padding-right: 5px;
+  }
+  .d-flex{
+    display: flex;
+    align-self: center;
+  }
+  .w-100{
+    width: 100%;
+  }
+  .lindungi h4{
+    font-size: 11px;
+    font-weight: bold;
+    color:var(--main);
+    margin: 0;
+  }
+  .lindungi button{
+    background: var(--main);
+    padding: 4px;
+    color: white;
+    border-radius: 4px 0px 0px 4px;
+    border: none;
+  }
+  .lindungi button h5{
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0;
+    margin-left: 3px;
+  }
+  .lindungi button img{
+    width: 15px;
+    filter: invert(100%) sepia(0%) saturate(7496%) hue-rotate(145deg) brightness(119%) contrast(100%);
+  }
+  .name-percent {
+    position: relative;
+    overflow: hidden;
+    height: 40px;
+    border: 1px solid #f1f1f1;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    animation: flip 8s infinite ease-in-out;
+    height: 160px; 
+}
+
+.text-container span {
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    font-size: 12px;
+}
+
+@keyframes flip {
+    0%, 25% {
+        transform: translateY(0);
+    }
+    30%, 50% {
+        transform: translateY(-40px);
+    }
+    55%, 75% {
+        transform: translateY(-80px);
+    }
+    80%, 95% {
+        transform: translateY(-120px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+.bottom-secure{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.bottom-secure div{
+  text-align: center;
+  width: 100%;
+}
+.bottom-secure p{
+  font-size: 10px;
+  font-weight: 450;
+  margin-bottom:0 ;
+  margin-top: 2px;
+}
+.bottom-secure img{
+  width: 30px;
+}
+    </style>
+</head>
+<body>
+
+    
+<div id="notification" class="notification">
+    <h5 id="notif-text">Transaksi</h5>
+    <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/6953251-1.png" alt="">
+    <h5 id="notif-status">Terlindungi</h5>
+</div>
+
+<div class="the-header">
+    <div class="the-nav">
+        <div class="w-max">
+        <p id="greeting">Selamat datang!</p>
+        <h5>{{nama_user}}</h5>
+        </div>
+        <a href="#">
+            <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/9307998.png" alt="" class="profil">
+        </a>
+        <a href="#">
+            <img src="https://cdn-icons-png.flaticon.com/128/9216/9216460.png" alt="" class="bell fil-w" style="width: 25px;margin-left: 10px;">
+        </a>
+    </div>
+
+    <div class="the-center">
+    <div class="w-max">
+    <button class="balance"> 
+        <div style="display: flex;">
+        <span>
+        <p>Saldo Utama</p>
+        <h5 id="saldo-member">{{saldo_user}}</h5>
+        <div style="display: flex;align-items: center;">
+        <h3>{{poin_member}}</h3>
+        <h6>Poin</h6>
+        </div>
+        </span>
+        </div>
+    </button>
+    </div>
+    <button class="tabungan"> 
+        <div style="display: flex;">
+            <span>
+            <p>Tabungan</p>
+            <h5 id="riwayatList">Loading..</h5>
+            </span>
+        </div>
+    </button>
+    </div>
+
+    <div class="the-menu-first">
+        <a href="{{url_website_baru}}/akun/?page=topup">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2201075899736118061613586.png" alt="" class="fil-u">
+                <p>TopUp</p>
+            </button>
+        </a>
+        <a href="https://neropay.shopku.id/digital/337003">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2227302151918278269971219.png" alt="" class="fil-u">
+                <p>Transfer</p>
+            </button>
+        </a>
+        <a href="https://neropay.shopku.id/digital/337514">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2230593403358602100356363.png" alt="" class="fil-u">
+                <p>Tabungan</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2232344638200180450390315.png" alt="" class="fil-u">
+                <p>Tarik</p>
+            </button>
+        </a>
+        
+    </div>
+
+</div>
+
+<section class="the-body">
+    <swiper-container class="mySwiper" slides-per-view="auto"
+    centered-slides="true" space-between="10" autoplay="true"> 
+    <swiper-slide>
+        <img src="https://petarukanstoreimage.wordpress.com/wp-content/uploads/2025/09/oig3-3.jpeg" alt="">
+    </swiper-slide>
+    <swiper-slide>
+        <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/hijau-ucapan-selamat-hari-raya-idul-fitri-spanduk_11zon.png" alt="">
+    </swiper-slide>
+    <swiper-slide>
+        <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/hijau-ucapan-selamat-hari-raya-idul-fitri-spanduk_11zon.png" alt="">
+    </swiper-slide>
+  </swiper-container>
+
+
+  <div class="container">
+    <h5 class="layanan-text">Kebutuhan Harian</h5>
+    <div class="the-menu-main">
+        <a href="https://neropay.shopku.id/digital/335604">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2158441471636428894317409.png" alt="" class="fil-u">
+                <p>Pulsa</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2158202552585249044965345.png" alt="" class="fil-u">
+                <p>Data</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2204355338647920374923273.png?w=300" alt="" class="fil-u">
+                <p>Telp</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2207247205298986493922744.png" alt="" class="fil-u">
+                <p>SMS</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2202435071647590653231778.png" alt="" class="fil-u">
+                <p>eWallet</p>
+            </button>
+        </a>
+        <a href="https://neropay.shopku.id/digital/336446">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2157347696722485243299465.png" alt="" class="fil-u">
+                <p>PLN</p>
+            </button>
+        </a>
+        <a href="https://neropay.shopku.id/digital/336443">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_215715169302630902273660.png" alt="" class="fil-u">
+                <p>G-Nero</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_223439972405916437444299.png" alt="" class="fil-u">
+                <p>Lainnya</p>
+            </button>
+        </a>
+    </div>
+  </div>
+
+
+<div class="container"><hr></div>
+
+
+<div class="container">
+    <h5 class="layanan-text">Bayar Tagihan</h5>
+    <div class="the-menu-main">
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2218366399624156516335549.png" alt="" class="fil-u">
+                <p>Air</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2157347696722485243299465.png" alt="" class="fil-u">
+                <p>Listrik</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_222130456376951578025978.png" alt="" class="fil-u">
+                <p>PBB</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_222229848050849516061099.png" alt="" class="fil-u">
+                <p>Wifi</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2208572883100249279538618.png" alt="" class="fil-u">
+                <p>PGN</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2212431746790576709077542.png" alt="" class="fil-u">
+                <p>TV</p>
+            </button>
+        </a>
+        <a href="#">
+            <button>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2223312324770487127741212.png" alt="" class="fil-u">
+                <p>Kredit</p>
+            </button>
+        </a>
+    </div>
+  </div>
+
+</section>
+
+
+
+
+
+
+<div class="container">
+    <div class="secure">
+      <div class="header-scure">
+        <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/6953251.png" alt="" class="shield-img">
+        <div class="w-100">
+          <h5>Petarukan Store</h5>
+          <p>Protection</p>
+        </div>
+        <div class="lindungi">
+          <button class="d-flex align-items-center">
+            <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/1161490.png" alt="">
+            <h5>100%</h5>
+          </button>
+          <h4>Terlindungi</h4>
+        </div>
+      </div>
+    
+    
+      <div class="name-percent" style="position:relative;overflow:hidden;height:40px;border: 1px solid #f1f1f1;border-radius: 10px;margin-top: 15px;">
+        <div class="text-container">
+        <span>Jaga Kerahasiaan akunmu</span>
+        <span>Jangan Berikan Kode OTP Kepada Siapapun</span>
+        <span>Kami Menjamin Kerahasiaan Datamu</span>
+        <span>Transaksi Dipantau 24 Jam</span>
+        </div>
+      </div>
+    
+    
+      <div class="bottom-secure">
+        <div class="ba-le">
+          <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2202435071647590653231778.png" alt="">
+          <p>Keuangan Aman</p>
+        </div>
+        <div class="ba-re">
+          <img src="https://neropict.wordpress.com/wp-content/uploads/2025/03/20250322_2227302151918278269971219.png" alt="">
+          <p>Aktivitas Terlindungi</p>
+        </div>
+      </div>
+    </div>
+    
+    
+    </div>
+
+
+
+
+<div id="notifBox" class="lihat" style="display: none;">
+<div style="position: relative;">
+<i class="fa-solid fa-comments"></i> Ada Pesan Baru
+</div>
+</div>
+
+<script>
+const iduserchat = "Pano";
+let lastMessageId = localStorage.getItem("lastMessageId") || 0;
+
+const notificationSound = new Audio("https://nerokode.com/sound/notif1.mp3");
+notificationSound.preload = "auto"; 
+notificationSound.volume = 1.0; 
+notificationSound.muted = true; // Autoplay diaktifkan tapi dimute
+
+// Coba langsung memainkan audio saat halaman dibuka
+notificationSound.play().then(() => {
+    console.log("Audio berhasil dimainkan di awal.");
+}).catch(error => console.warn("Autoplay dicegah oleh browser:", error));
+
+function checkNewMessages() {
+    fetch("https://nerokode.com/livechatapp/ambil_pesan.php?id_user=" + iduserchat) 
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                let latestMessage = data[data.length - 1];
+                if (latestMessage.id > lastMessageId && latestMessage.nama_user === "Admin") {
+                    lastMessageId = latestMessage.id;
+                    localStorage.setItem("lastMessageId", lastMessageId);
+                    localStorage.setItem("pesanSudahDilihat", "false");
+                    
+                    // Putar suara saat ada pesan baru
+                    playNotificationSound();
+                    showNotification();
+                }
+            }
+        })
+        .catch(error => console.error("Error fetching messages:", error));
+}
+
+function playNotificationSound() {
+    notificationSound.muted = false; // Unmute audio sebelum memutar
+    notificationSound.currentTime = 0;
+    notificationSound.play().catch(error => console.error("Error playing sound:", error));
+}
+
+function showNotification() {
+    let notifBox = document.getElementById("notifBox");
+    if (localStorage.getItem("pesanSudahDilihat") === "false") {
+        notifBox.style.display = "block";
+    }
+}
+
+// Tambahkan event listener untuk memastikan audio bisa dimainkan saat halaman aktif
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+        notificationSound.play().catch(error => console.error("Error unlocking audio:", error));
+    }
+});
+
+document.querySelector(".lihat").addEventListener("click", function() {
+    document.getElementById("notifBox").style.display = "none"; 
+    localStorage.setItem("pesanSudahDilihat", "true");
+    window.location.href = "https://neropay.shopku.id/digital/184656";
+});
+
+showNotification();
+setInterval(checkNewMessages, 2000);
+
+
+</script>
+<script>
+const urlBase = "https://nerokode.com";
+const myID = "{{id_user}}";
+
+$(document).ready(function() {
+    if (myID) {
+        cekRiwayat(myID);
+    } else {
+        $("#riwayatList").html("<p>Kesalahan Jaringan</p>"); 
+    }
+});
+
+function cekRiwayat(id_user) {
+    $.ajax({
+        url: urlBase + "/Bukaolshop/tabungan/riwayat.php",
+        type: "GET",
+        data: { id_user },
+        dataType: "json",
+        success: function(response) {
+            if (response.status === "success") {
+                let riwayatHTML = "";
+                if (response.data.length > 0) {
+                    response.data.forEach(function(item) {
+                        riwayatHTML += 
+                            '<div class="nominal-tabungan">' +
+                                '<div class="jumlah">Rp' + item.jumlah.toLocaleString() + '</div>' +
+                                '<div style="display:flex;align-items:center;">' +
+                                    '<h3 class="bunga"> + Rp' + item.bunga.toLocaleString() + '</h3>' +
+                                    '<h6>Hari ini</h6>' +
+                                '</div>' +
+                            '</div>';
+                    });
+                } else {
+                    riwayatHTML = "<h5>Rp0</h5>";
+                }
+                $("#riwayatList").html(riwayatHTML);
+            } else {
+                $("#riwayatList").html("<p>" + response.message + "</p>");
+            }
+        },
+        error: function() {
+            $("#riwayatList").html("<p>Jaringan tidak stabil</p>");
+        }
+    });
+}
+
+
+</script>
+<script>
+const modeScript = "edit";
+
+if (modeScript === "aktif") {
+    if (!sessionStorage.getItem('redirectDone')) {
+        sessionStorage.setItem('redirectDone', 'true');
+        setTimeout(function() {
+            window.location.href = "{{url_website_baru}}/refresh_saldo"; 
+        }, 100);
+    }
+    setTimeout(function() {
+        sessionStorage.removeItem('redirectDone');
+    }, 3500);
+}
+
+  </script>
+<script>
+function toggleOffcanvas() {
+    document.getElementById("offcanvas").classList.toggle("show");
+}
+
+function updateNotification(status) {
+      const notification = document.getElementById("notification");
+      const notifText = document.getElementById("notif-text");
+      const notifStatus = document.getElementById("notif-status");
+      const allLinks = document.querySelectorAll("a");
+      
+      if (status === "offline") {
+          notifText.textContent = "Koneksi";
+          notifStatus.textContent = "Terputus";
+          notifStatus.classList.add("offline");
+          notifStatus.classList.remove("online");
+          notification.style.animation = "expand 1s ease-out forwards";
+          notification.style.opacity = "1";
+          allLinks.forEach(link => {
+              link.dataset.href = link.href;
+              link.removeAttribute("href");
+              link.style.pointerEvents = "none";
+              link.style.opacity = "0.6";
+          });
+      } else if (status === "online") {
+          notifText.textContent = "Transaksi";
+          notifStatus.textContent = "Terlindungi";
+          notifStatus.classList.add("online");
+          notifStatus.classList.remove("offline");
+          notification.style.animation = "expand 1s ease-out forwards";
+          notification.style.opacity = "1";
+          setTimeout(() => {
+              notification.style.animation = "hide 1s ease-out forwards";
+          }, 2000);
+          
+          allLinks.forEach(link => {
+              if (link.dataset.href) {
+                  link.href = link.dataset.href;
+                  delete link.dataset.href;
+              }
+              link.style.pointerEvents = "auto";
+              link.style.opacity = "1";
+          });
+      }
+  }
+
+  window.addEventListener("online", () => updateNotification("online"));
+  window.addEventListener("offline", () => updateNotification("offline"));
+  
+  function initializeNotification() {
+      if (!navigator.onLine) {
+          updateNotification("offline");
+      } else {
+          updateNotification("online");
+      }
+  }
+  window.onload = initializeNotification;
+  document.addEventListener("DOMContentLoaded", function () {
+    let font = localStorage.getItem("selectedFont");
+
+    if (!font) {
+        font = "Quicksand, sans-serif";
+        localStorage.setItem("selectedFont", font);
+    }
+
+    document.body.style.fontFamily = font;
+});
+
+
+function getGreeting() {
+    let greetingText = "";
+    let now = new Date();
+    let hour = now.getHours();
+    if (hour >= 5 && hour < 11) {
+        greetingText = "Selamat Pagi";
+    } else if (hour >= 11 && hour < 15) {
+        greetingText = "Selamat Siang";
+    } else if (hour >= 15 && hour < 18) {
+        greetingText = "Selamat Sore";
+    } else {
+        greetingText = "Selamat Malam";
+    }
+        document.getElementById("greeting").innerText = greetingText;
+    }
+    function formatRupiah(angka) {
+        let reverse = angka.toString().split('').reverse().join(''),
+            ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+        return "Rp" + ribuan;
+    }
+    const saldoElement = document.getElementById('saldo-member');
+    saldoElement.textContent = formatRupiah(saldoElement.textContent);
+getGreeting();
+</script>
+
+</body>
+</html>

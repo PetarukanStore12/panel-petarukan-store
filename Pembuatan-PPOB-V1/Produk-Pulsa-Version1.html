@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://rawcdn.githack.com/NeroKode-id/Nkey/567496fbd5f1fd5825e89a34f3f2cd36d95d211d/fontstyle.css">
+  <title>Isi Pulsa</title>
+  <style>
+:root {
+      --main: #f1f1f1;
+      --color--utama: #E118A7;
+    }
+    *,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    scrollbar-width: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  background: var(--main);
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  padding: 0;
+  margin: 0;
+  animation: fade-in 2s linear;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: var(--color--utama);
+  height: 70px;
+}
+.container {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.form--box {
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  margin: 10px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 10px;
+  z-index: 99;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.bg--input input {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border: 2px solid #f1f1f1;
+  border-radius: 10px;
+  outline: none;
+  font-weight: 600;
+}
+.bg--input input:focus {
+  border: 2px solid var(--color--utama);
+}
+.contact {
+  width: 25px;
+}
+.form-button {
+  display: flex;
+  align-items: center;
+  background: #f1f1f1;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 100px;
+  margin-top: 14px;
+}
+.form-button a {
+  text-decoration: none;
+  width: 100%;
+}
+.form-button button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+  padding: 9px;
+}
+.form-button button img {
+  width: 16px;
+}
+.form-button button h5 {
+  font-size: 11px;
+  margin: 0;
+}
+.center-border {
+  border-left: 1px solid #cccccc83;
+  border-right: 1px solid #cccccc83;
+}
+.d-flex {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.input-container {
+  position: relative;
+}
+label {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ccc;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: all 0.2s ease;
+}
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  top: 0;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--color--utama);
+  background: white;
+  padding: 5px;
+}
+.input-container a {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+}
+.favorite {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.favorite h5 {
+  margin: 0;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+}
+.favorite button {
+  border: none;
+  background: transparent;
+  color: red;
+}
+#statusMessage {
+  width: auto;
+  border-left: 3px solid var(--color--utama);
+  padding-left: 10px;
+  font-size: 12px;
+}
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-height: 400px;
+  overflow-y: auto;
+  -webkit-animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1)
+    both;
+  animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+.popup .list-item {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+#confirmDeletePopup{
+  display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0,0,0,0.7); padding: 20px; color: white;z-index: 9999999;
+  border-radius: 10px;
+}
+#confirmDeletePopup button{
+    border-radius: 10px;
+    margin: 10px;
+    background: red;
+    color: white;
+    padding: 8px;
+    font-size: 13px;
+    border: none;
+}
+.no-fav {
+  text-align: center;
+  margin-top: 15px;
+}
+.no-fav img {
+  width: 50px;
+}
+.no-fav p {
+  font-size: 13px;
+  font-weight: bold;
+  color: #ccc;
+}
+.popup .list-item:hover {
+  background-color: #f0f0f0;
+}
+.close-btn {
+  margin-top: 15px;
+  border: none;
+  background: gray;
+  color: white;
+  font-size: 13px;
+  padding: 5px 15px 5px 15px;
+  border-radius: 10px;
+  width: 50%;
+}
+.mode-1 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  margin-top: 10px;
+
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pil-produk {
+  background: white;
+  padding: 13px;
+  border-radius: 15px;
+  position: relative;
+  animation: fade-in-down 1s ease;
+}
+.pil-produk img {
+  width: 30px;
+  border-radius: 8px;
+  margin-right: 5px;
+  transition: opacity 0.3s ease;
+}
+.disabled-product {
+  pointer-events: none;
+  opacity: 1;
+  cursor: not-allowed;
+  filter: grayscale(100%);
+  border-radius: 15px;
+  overflow: hidden;
+}
+.tag-produk {
+  width: 100%;
+}
+.pil-produk h4 {
+  font-size: 13px;
+  margin: 0;
+  font-weight: 700;
+  width: 100%;
+}
+.pil-produk p {
+  font-size: 13px;
+  margin: 0;
+  font-weight: bold;
+  text-align: end;
+  color: var(--color--utama);
+}
+.diskon {
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+}
+.diskon {
+  --r: .4em;
+  --c: #ff0000;
+  position: absolute;
+  top: 10px;
+  right: calc(-1*var(--r));
+  line-height: 1.8; 
+  padding: 0 .8em calc(2*var(--r));
+  border-radius: 0 var(--r) var(--r) 0;
+  background: 
+    radial-gradient(100% 50% at right,var(--c) 98%,#0000 101%)
+     0 0/.5lh calc(100% - 2*var(--r)),
+    radial-gradient(100% 50% at left,#0005 98%,#0000 101%) 
+     100% 100%/var(--r) calc(2*var(--r)),
+    conic-gradient(from 180deg at calc(100% - var(--r)) calc(100% - 2*var(--r)),#0000 25%,var(--c) 0)
+     100% 0/calc(101% - .5lh) 100%;
+  background-repeat: no-repeat;   
+}
+.pil-produk .ribbon{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: end;
+  background: rgba(255, 0, 0, 0.116);
+  padding-right: 15px;
+  padding-top: 7px;
+  font-size: 10px;
+  color: red;
+  font-weight: bold;
+}
+.pil-produk s {
+  text-decoration: line-through !important;
+  font-size: 11px;
+  margin: 0;
+  font-weight: bold;
+  margin-right: 0px;
+  color: gray;
+}
+.d-price {
+  display: flex;
+  align-items: center;
+  right: 0;
+  bottom: 0;
+  gap: 5px;
+  width: 100%;
+  padding: 3px 15px 3px 10px;
+  background: var(--color--utama);
+  border-radius: 15px 0px 15px 0px;
+}
+.pil-produk h6 {
+  font-size: 11px;
+  margin-bottom: 0px;
+  color: gray;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+/* MODE 2 */
+.mode-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+.mode-2 .pil-produk s {
+  display: none;
+}
+
+.fitur input {
+  width: 100%;
+  border: none;
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+}
+#toggleButton,
+#sortButton,
+#visibilityButton,
+#mode-toggle
+ {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  margin-left: 15px;
+}
+#toggleButton img,
+#sortButton img,
+#visibilityButton img,
+#mode-toggle img {
+  width: 23px;
+}
+.informasi {
+  text-align: center;
+}
+.informasi img {
+  width: 50px;
+  margin-bottom: 10px;
+  opacity: 0.5;
+  margin-top: 15px;
+}
+.informasi p {
+  font-size: 12px;
+  color: gray;
+}
+.offcanvas {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  background-color: transparent;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1050;
+}
+.offcanvas-body {
+  background: white;
+  border-radius: 5px;
+}
+.offcanvas-body img {
+  width: 30px;
+}
+.offcanvas.show {
+  transform: translateY(0);
+}
+.offcanvas-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1049;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s ease-in-out;
+}
+.offcanvas h1 {
+  font-size: 14px;
+  margin: 0;
+  width: 100%;
+}
+.header-offcanvas {
+  background: var(--color--utama);
+  color: white;
+  border-radius: 5px 5px 0px 0px;
+  padding: 14px;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.offcanvas-overlay.show {
+  visibility: visible;
+  opacity: 1;
+}
+.confirm {
+  padding: 14px;
+}
+.confirm button {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  background: var(--color--utama);
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+}
+.btn-link {
+  color: var(--color--utama);
+  font-weight: bold;
+  font-size: 13px;
+  margin-top: 5px;
+}
+.detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  gap: 15px;
+  border-bottom: 2px solid #f1f1f1;
+}
+.detail p {
+  font-size: 13px;
+  width: 100%;
+  margin: 0;
+  font-weight: 650;
+}
+.space-detail {
+  padding-left: 14px;
+  padding-right: 14px;
+  margin-top: 15px;
+}
+.deskripsi-produk {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background: aliceblue;
+  border-radius: 5px;
+  padding: 12px;
+}
+.no-kurang {
+  padding: 12px;
+  color: orangered;
+  font-size: 13px;
+  font-weight: bold;
+  background: rgba(255, 137, 0, 0.2);
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.batalBtn {
+  border: none;
+  width: auto !important;
+  background: #747474cc !important;
+  margin-right: 15px;
+  padding: 10px 15px 10px 15px !important;
+}
+.batalBtn img {
+  width: 15px;
+  filter: invert(100%) sepia(0%) saturate(21%) hue-rotate(72deg) brightness(106%) contrast(108%);
+}
+.beliBtn.disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.notification {
+position: fixed;
+left: 50%;
+bottom: 50%;
+transform: translate(-50%, 50%);
+background-color: #ff260085;
+color: white;
+padding: 10px 20px;
+border-radius: 10px;
+font-size: 14px;
+font-weight: bold;
+display: none;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+z-index: 9999;
+
+}
+.category h3 {
+  display: none;
+}
+.tab-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+}
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color--utama);
+  height: 100%;
+  width: 0;
+  border-radius: 10px;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+.tab-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  font-size: 13px;
+  background: transparent;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+
+}
+.active {
+  background: transparent;
+  color:white;
+  font-weight: 550;
+}
+.t-back {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.popup-info h2 {
+  font-size: 15px;
+  font-weight: bold;
+  color: red;
+}
+.popup-info p {
+  font-size: 13px;
+  font-weight: bold;
+}
+.popup-info ul {
+  padding-left: 20px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-weight: 550;
+}
+.popup-info h5 {
+  margin-bottom: 10px;
+}
+.scroll-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 6px;
+      background: linear-gradient(-45deg, var(--color--utama), var(--color--utama), var(--color--utama), var(--color--utama));
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      transition: width 0.3s ease-out;
+      z-index: 1000;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .pencarian-tidak-ditemukan{
+      text-align: center;
+      margin-top: 100px;
+    }
+    .pencarian-tidak-ditemukan img{
+      width: 200px;
+    }
+    .pencarian-tidak-ditemukan p{
+      font-size: 13px;
+      font-weight: 600;
+      opacity: .8;
+      color: black;
+    }
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 999999;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.popup-container.show-popup {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup-container div {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+}
+.popup-container div h5{
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: var(--color--utama);
+}
+.popup-container button {
+  margin-top: 20px;
+  border: none;
+  background: gray;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+#showMoreBtn{
+  border: none;
+  background: transparent;
+  color: var(--color--utama);
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.pilih-opt{
+      background: var(--color--utama);
+      color: white;
+      padding: 10px;
+      border: none;
+      font-size: 13px;
+      border-radius: 10px;
+      font-weight: bold;
+      margin-right: 10px;
+      width: auto;
+      gap: 5px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+    .pilih-opt img{
+        width: 18px;
+        filter: invert(90%) sepia(0%) saturate(7500%) hue-rotate(111deg) brightness(113%) contrast(111%);
+    }
+    .opt-img-terpilih{
+        width: 30px;
+        border-radius: 100px;
+    }
+    .opt-nama-terpilih{
+        margin: 0;
+    }
+    .operator-pulsa {
+      border: none;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .operator-pulsa img{
+      width: 38px;
+      padding: 5px;
+      border-radius: 100px;
+      background: rgba(0, 202, 138, 0.10);
+    }
+    .operator-pulsa h5{
+      font-size: 13px;
+      font-weight: 550;
+      margin: 0;
+      text-align: left;
+      width: 100%;
+    }
+    .operator-pulsa i{
+      opacity: .4;
+    }
+    .hidden{
+        display: none;
+    }
+    .salah{
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .salah{
+      font-size: 14px;
+      font-weight: bold;
+      color: red;
+    }
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  font-size: 12px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.progress-bar {
+  width: 100%;
+  margin-top: 5px;
+  height: 3px;
+  background: #ff9800;
+  animation: progress 3s linear forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes progress {
+  from { width: 100%; }
+  to { width: 0; }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+</style>
+
+</head>
+<body>
+
+
+
+<div class="header"></div>
+<div class="form--box">
+  <div class="scroll-line"></div>
+    <div class="d-flex align-items-center bg--input input-container">
+      <input type="tel" id="id" name="catatan" value="" placeholder="" class="{{hasil_kontak}} {{hasil_scan}}" onchange="updatePhoneNumber(this)">
+      <label for="id">Nomor Tujuan</label>
+    </div>
+    <div class="form-button">
+            <button onclick="tampilkanPopup()">
+                <img src="https://hostfoto.wordpress.com/wp-content/uploads/2025/02/3916713.png" alt="">
+                <h5>Info</h5>
+            </button>
+        <a onclick="activateChangeEvent()" class="center-border">
+            <button>
+                <img src="https://hostfoto.wordpress.com/wp-content/uploads/2025/02/18098702.png" alt="">
+                <h5>Kontak</h5>
+            </button>
+        </a>
+            <button id="saveButton">
+                <img src="https://hostfoto.wordpress.com/wp-content/uploads/2025/02/9585708.png" alt="">
+                <h5>Favorite</h5>
+            </button>
+    </div>
+</div>
+
+
+
+
+
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+      <h3 style="font-size: 14px;">Pilih Nomor</h3>
+      <p id="statusMessage" class="m-0"></p>
+      <div id="popupPhoneList"></div>
+      <center>
+      <button onclick="closePopup()" class="close-btn">Tutup</button>
+     </center>
+    </div>
+</div>
+
+
+<div id="popupinfo" class="popup popup-info">
+  <div class="popup-content">
+    <h2 id="judul"></h2>
+    <ul id="daftarInformasi">
+    </ul>
+    <img src="#" alt="" id="gambarTutor" style="width: 100%;border-radius: 15px;">
+    <center>
+      <button onclick="tutupPopup()" class="close-btn">Tutup</button>
+    </center>
+  </div>
+</div>
+
+<div class="container">
+    <div class="produk-kontainer" style="display: none;">
+<div class="t-back mb-3 mt-3">
+    <div class="category-container" id="category-container"></div>
+</div>
+
+
+
+
+<div class="d-flex align-items-center fitur">
+<input type="text" id="search-input" placeholder="Cari Nominal" oninput="filterProductsByName()">
+<button id="visibilityButton" onclick="toggleVisibility()">
+    <img id="visibilityIcon" src="https://kobodeveloper.wordpress.com/wp-content/uploads/2025/02/8287193.png" alt="Show/Hide Icon" class="toggle-icon">
+</button>
+<button id="sortButton" onclick="toggleSort()">
+    <img id="sortIcon" src="https://kobodeveloper.wordpress.com/wp-content/uploads/2025/02/8189398.png">
+</button>
+<button id="toggleButton">
+      <img id="toggleImage" src="#" alt="Mode 1">
+</button>
+</div>
+
+
+<div class="d-flex" style="gap: 10px;">
+    <button class="pilih-opt d-flex" style="width: 100%;"><img src="https://hostfoto.wordpress.com/wp-content/uploads/2025/02/17699.png" alt=""> Ganti Operator</button>
+    <h5 class="opt-nama-terpilih"></h5>
+    <img src="#" alt="" class="opt-img-terpilih">
+</div>
+
+<div class="product-container mode-1" id="product-container">
+    <div class="informasi">
+    <div class="progress"></div>
+    </div>
+</div>
+
+    
+    <div id="notification" class="notification" style="display: none;">
+        <p id="notification-message"></p>
+      </div>
+  
+  
+  
+      <div class="pencarian-tidak-ditemukan" style="display: none;">
+        <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/undraw_file-search_cbur__1_-removebg-preview.png" alt="">
+        <p>Produk tidak ditemukan</p>
+      </div>
+  
+
+  </div>
+</div>
+
+
+
+  <div id="offcanvasOverlay" class="offcanvas-overlay"></div>
+  <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+      <div class="offcanvas-body">
+        <div class="d-flex header-offcanvas">
+          <h1>Detail Produk</h1>
+        </div>
+        <div class="space-detail">
+          <div class="detail">
+            <p>Produk</p>
+            <h6>:</h6>
+            <p id="detail_nama_produk"></p>
+          </div>
+          <div class="detail">
+            <p>No HP</p>
+            <h6>:</h6>
+            <p id="id_value"></p>
+          </div>
+          <div class="detail">
+            <p>Harga</p>
+            <h6>:</h6>
+            <p id="detail_harga_produk"></p>
+          </div>
+        <h5 id="detail_deskripsi" class="deskripsi-produk"></h5>
+      </div>
+        <div class="d-flex confirm">
+          <button data-bs-dismiss="offcanvas" class="batalBtn" onclick="hideOffcanvas()"> <img src="https://hostfoto.wordpress.com/wp-content/uploads/2025/02/17699.png" alt=""> 
+          </button>
+          <button class="beliBtn"> BELI SEKARANG </button>
+        </div>
+      </div>
+    </div>
+  
+
+    
+    
+
+
+    <div id="confirmDeletePopup" style="display: none;">
+      <p>Konfirmasi Penghapusan</p>
+      <button id="confirmDeleteButton">Hapus</button>
+      <button id="cancelDeleteButton" onclick="closeConfirmPopup()">Batal</button>
+    </div>
+
+
+<div class="pilihan-opt-pulsa">
+    <div class="container">
+      <p style="font-size: 13px;font-weight: bold;margin-top: 10px;margin-bottom: 10px;">Pilih Operator</p>
+
+    <button class="operator-pulsa pilihan-opt-pulsa-btn" data-value="Pulsa Telkomsel">
+      <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/43899cf7a04b21ac43145ad5fced2707_icon.png" alt="">
+      <h5>Telkomsel</h5>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="operator-pulsa pilihan-opt-pulsa-btn" data-value="Pulsa XL">
+      <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/cropped-image.png" alt="">
+      <h5>XL-Axiata</h5>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="operator-pulsa pilihan-opt-pulsa-btn" data-value="Pulsa Axis">
+      <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/images.png" alt="">
+      <h5>Axis</h5>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="operator-pulsa pilihan-opt-pulsa-btn" data-value="Pulsa Tri">
+      <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/cart-icon-03_1.jpg" alt="">
+      <h5>Tri</h5>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="operator-pulsa pilihan-opt-pulsa-btn" data-value="Pulsa Smartfren">
+      <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/voucher-smartfren-4451-asxi.png" alt="">
+      <h5>Smartfren</h5>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="operator-pulsa pilihan-opt-pulsa-btn" data-value="Pulsa Byu">
+      <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/a6dd7b87-648e-4deb-aeb0-8a08745916cb.jpg" alt="">
+      <h5>Byu</h5>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="operator-pulsa pilihan-opt-pulsa-btn" data-value="Pulsa Indosat">
+      <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/77870cb3de669faf6ec69cc60f6ddd81.jpeg" alt="">
+      <h5>Indosat</h5>
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    </div>
+    </div>
+    
+    <div class="salah">
+
+    </div>
+    <br>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("id");
+    const buttons = document.querySelectorAll(".operator-pulsa");
+    const infoContainer = document.querySelector(".salah");
+    
+    infoContainer.style.display = "none";
+
+    input.addEventListener("input", function () {
+        const value = input.value;
+        const prefix = value.substring(0, 4);
+        buttons.forEach(button => button.style.display = "flex");
+        infoContainer.style.display = "none";
+        infoContainer.textContent = "";
+
+        if (value === "") {
+            return; 
+        }
+
+        if (!value.startsWith("08")) {
+            buttons.forEach(button => button.style.display = "none");
+            infoContainer.innerHTML = "Nomor Tujuan Tidak Lengkap";
+            infoContainer.style.display = "block";
+            return;
+        }
+        
+        let showSelector = "";
+        if (["0852", "0853", "0811", "0812", "0813", "0821", "0822", "0823", "0851"].includes(prefix)) {
+            showSelector = '[data-value^="Pulsa Telkomsel"], [data-value^="Pulsa Byu"]';
+        } else if (["0895", "0896", "0897", "0898", "0899"].includes(prefix)) {
+            showSelector = '[data-value^="Pulsa Tri"]';
+        } else if (["0838", "0831", "0832", "0833"].includes(prefix)) {
+            showSelector = '[data-value^="Pulsa Axis"]';
+        } else if (["0817", "0818", "0819", "0859", "0877", "0878", "0879"].includes(prefix)) {
+            showSelector = '[data-value^="Pulsa XL"]';
+        } else if (["0857", "0856", "0814", "0815", "0816", "0855", "0858"].includes(prefix)) {
+            showSelector = '[data-value^="Pulsa Indosat"]';
+        } else if (["0882", "0881", "0883", "0884", "0885", "0886", "0887", "0888", "0889"].includes(prefix)) {
+            showSelector = '[data-value^="Pulsa Smartfren"]';
+        }
+      
+        if (showSelector) {
+            buttons.forEach(button => button.style.display = "none");
+            document.querySelectorAll(showSelector).forEach(button => button.style.display = "flex");
+        }
+    });
+});
+</script>
+
+ 
+<script>
+// Token Open Api
+var tokenapi = "eyJhcHAiOiIxNTI1MjciLCJhdXRoIjoiMjAyNDAzMDEiLCJzaWduIjoid3I5emM3VEdmdG1cL2lkY2tSbU5KUEE9PSJ9";
+
+
+// Nama Kategori Utama Pastikan Memiliku subcategori
+var kategoriShow = [""];
+
+
+
+// Kostum nama subcategori , kosongkan jika tidak ingin kostum
+const tabNames = [
+  "", 
+  ""
+]; 
+
+// Icon On Of Foto Produk
+const imgOn = 'https://kobodeveloper.wordpress.com/wp-content/uploads/2025/02/8287193.png';
+const imgOf = 'https://kobodeveloper.wordpress.com/wp-content/uploads/2025/02/9261193.png';
+
+
+// Icon Short - Termurah ke termahal
+const shortLow = 'https://kobodeveloper.wordpress.com/wp-content/uploads/2025/02/8189398.png';
+const shortHight = 'https://kobodeveloper.wordpress.com/wp-content/uploads/2025/02/8189398.png';
+
+
+// Icon List & Grid Mode
+const listMode = 'https://hostfoto.wordpress.com/wp-content/uploads/2025/02/3114889.png';
+const gridMode = 'https://hostfoto.wordpress.com/wp-content/uploads/2025/02/5368372.png'
+const defaultMode = 'https://hostfoto.wordpress.com/wp-content/uploads/2025/02/3114889.png';
+
+// Gambar Jika produk kosong
+const noProdukIMG = "https://neropict.wordpress.com/wp-content/uploads/2025/02/empty.png";
+
+// Setting Informasi Tutorial
+const gambarTutor = "#";
+
+const judulBaru = "Penting untuk Dibaca!";
+const informasiBaru = [
+      "Pastikan Nomor Tujuan benar sebelum transaksi",
+      "Transaksi yang berstatus Proses/Sukses tidak dapat dibatalkan",
+      "Kesalahan memasukan Nomor Tujuan Merupakan tanggung jawab sendiri"
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Setingan berakhir disini
+// ====================== //
+// Type Script | tidak perlu dirubah
+var ewallet = 'Pulsa';
+var urlOlshop = "{{url_website_baru}}";
+var saldoku = "{{saldo_user}}";
+// HAK-CIPTA-SOURCODE
+const NeroKode = "Wa-0877-3999-5444";
+
+function filterProductsByName() {
+  const searchInput = document.getElementById('search-input').value.toLowerCase();
+  const products = document.querySelectorAll('.product');
+  let found = false;  
+  products.forEach(product => {
+    const productName = product.getAttribute('data-product-name').toLowerCase();
+    if (productName.includes(searchInput)) {
+      product.style.display = ''; 
+      found = true;
+    } else {
+      product.style.display = 'none'; 
+    }
+  });
+  const noResultsDiv = document.querySelector('.pencarian-tidak-ditemukan');
+  if (!found) {
+    noResultsDiv.style.display = 'block'; found
+  } else {
+    noResultsDiv.style.display = 'none'; 
+  }
+}
+
+
+
+const container = document.getElementById('product-container');
+const toggleImage = document.getElementById('toggleImage');
+const savedMode = localStorage.getItem('mode') || 'mode-1';
+container.classList.add(savedMode);  
+toggleImage.src = savedMode === 'mode-1' ? listMode : gridMode;
+document.getElementById('toggleButton').addEventListener('click', function() {
+    if (container.classList.contains('mode-1')) {
+        container.classList.remove('mode-1');
+        container.classList.add('mode-2');
+        toggleImage.src = gridMode;
+        localStorage.setItem('mode', 'mode-2'); 
+    } else if (container.classList.contains('mode-2')) {
+        container.classList.remove('mode-2');
+        container.classList.add('mode-1');
+        toggleImage.src = listMode; 
+        localStorage.setItem('mode', 'mode-1');
+    }
+});
+
+function displaySavedNumbers() {
+  console.log('Memuat ulang daftar nomor...');
+  const savedNumbers = JSON.parse(localStorage.getItem(ewallet)) || [];
+  let popupHTML = '';
+
+  if (savedNumbers.length === 0) {
+    popupHTML = '<div class="no-fav"><img src="https://hostfoto.wordpress.com/wp-content/uploads/2025/02/14703131.png" style="opacity:.4;"><p>Belum ada data</p></div>';
+  } else {
+    savedNumbers.forEach((number, index) => {
+      popupHTML += `
+        <div class="list-item favorite">
+          <h5 onclick="setPhoneNumber('${number}')">${number}</h5>
+          <button class="delete-button" onclick="confirmDeleteNumber(${index})">
+            <i class="fas fa-minus-square"></i>
+          </button>
+        </div>
+      `;
+    });
+  }
+
+  const popupPhoneList = document.getElementById('popupPhoneList');
+  if (popupPhoneList) {
+    popupPhoneList.innerHTML = popupHTML;
+  } else {
+    console.error('popupPhoneList tidak ditemukan!');
+  }
+}
+
+
+document.getElementById('saveButton').addEventListener('click', function() {
+  const phoneNumber = document.getElementById('id').value;
+  if (phoneNumber) {
+    let savedNumbers = JSON.parse(localStorage.getItem(ewallet)) || []; 
+    if (savedNumbers.includes(phoneNumber)) {
+      openPopup();
+      document.getElementById('statusMessage').textContent = 'Nomor sudah ada.';
+      setTimeout(function() {
+        document.getElementById('statusMessage').textContent = '';
+      }, 2000);
+    } else {
+      savedNumbers.push(phoneNumber);
+      localStorage.setItem(ewallet, JSON.stringify(savedNumbers));
+      document.getElementById('statusMessage').textContent = 'Berhasil disimpan!';
+      openPopup();  
+      displaySavedNumbers();
+
+      setTimeout(function() {
+        document.getElementById('statusMessage').textContent = '';
+      }, 4000);
+    }
+  } else {
+    openPopup();
+  }
+});
+
+let currentDeleteIndex = null;
+
+function confirmDeleteNumber(index) {
+  currentDeleteIndex = index;
+  document.getElementById('confirmDeletePopup').style.display = 'flex';
+}
+
+document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+  if (currentDeleteIndex !== null) {
+    deleteNumber(currentDeleteIndex);
+    closeConfirmPopup();
+    currentDeleteIndex = null;
+  }
+});
+
+
+function closeConfirmPopup() {
+  const confirmPopup = document.getElementById('confirmDeletePopup');
+  confirmPopup.style.display = 'none';
+}
+
+function deleteNumber(index) {
+  let savedNumbers = JSON.parse(localStorage.getItem(ewallet)) || []; 
+  savedNumbers.splice(index, 1);
+  localStorage.setItem(ewallet, JSON.stringify(savedNumbers));  
+  displaySavedNumbers();
+}
+
+
+function setPhoneNumber(number) {
+  document.getElementById('id').value = number;
+  closePopup();
+}
+
+
+function openPopup() {
+  const popup = document.getElementById('popup');
+  popup.style.display = 'flex';
+  displaySavedNumbers();
+}
+
+
+function closePopup() {
+  const popup = document.getElementById('popup');
+  popup.style.display = 'none';
+  var popupContainer = document.querySelector('.popup-container');
+  popupContainer.classList.remove('show-popup');
+  setTimeout(function() {
+    popupContainer.remove();
+  }, 300);
+}
+
+
+function tampilkanPopup() {
+  document.getElementById("popupinfo").style.display = "flex";
+}
+
+
+function tutupPopup() {
+  document.getElementById("popupinfo").style.display = "none";
+}
+
+
+const scrollLine = document.querySelector('.scroll-line');
+function updateScrollProgress() {
+  const windowHeight = window.innerHeight;
+  const fullHeight = document.body.clientHeight;
+  const scrolled = window.scrollY;
+  const percentScrolled = (scrolled / (fullHeight - windowHeight)) * 100;
+  scrollLine.style.width = `${percentScrolled}%`;
+}
+updateScrollProgress();
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      updateScrollProgress();
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+window.addEventListener('resize', updateScrollProgress);
+window.onload = function() {
+  displaySavedNumbers();
+};
+
+(function() {
+  document.getElementById("judul").textContent = judulBaru;
+  const daftarInformasi = document.getElementById("daftarInformasi");
+  daftarInformasi.innerHTML = "";
+  
+  informasiBaru.forEach(function(item) {
+    const li = document.createElement("li");
+    li.textContent = item;
+    daftarInformasi.appendChild(li);
+  });
+  
+  document.getElementById("gambarTutor").src = gambarTutor;
+})();
+
+</script>
+<script src="https://rawcdn.githack.com/NeroKode-id/Nkey/c9956b6001860363053a88ee1f6e34a03be7b170/PulsaEncV2.js"></script>
+</body>
+</html>

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Transaksi</title>
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        html, body {
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+    display: none;
+}
+        body {
+            font-family: "Nunito Sans", serif;
+  font-optical-sizing: auto;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+        .daftar-trx{
+            display: flex;
+            gap: 10px;
+            color: black;
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            width: 100%;
+            margin-top: 10px;
+            position: 
+            relative;
+            padding-bottom: 5px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        }
+        .garis-trx-1{
+            position: absolute;
+            left: 27px;
+            border-left:2px solid #005D88;
+            height: 28px;
+            top: 47px;
+        }
+        .garis-trx-2{
+            position: absolute;
+            left: 27px;
+            border-bottom:2px solid #005D88;
+            width: 25px;
+            top: 69px;
+        }
+        .daftar-trx .icon{
+            position: absolute;
+            bottom: 6px;
+            left: 21px;
+            width: 15px;
+            
+        }
+        .daftar-trx h1{
+            font-size: 12px;
+            color: gray;
+            margin: 0;
+        }
+        .daftar-trx h2{
+            font-size: 13px;
+            font-weight: bold;
+            margin: 0;
+            opacity: .8;
+        }
+        .daftar-trx h3{
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0;
+            
+        }
+.daftar-trx h4 {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+        .daftar-trx img{
+            width: 15px;
+            border-radius: 100px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        }
+        .icon-trx{
+            width: 35px !important;
+            border-radius: 100px;
+            background: rgba(0, 255, 157, 0.288);
+            padding: 4px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        }
+        a{text-decoration: none;}
+        .tanggal {
+            font-size: 13px;
+            color: gray;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .summary {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .tabs {
+            display: none;
+            align-items: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 10px;
+            gap: 5px;
+            border-radius: 100px;
+        }
+        .tab-button {
+            padding: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 100px;
+            background-color: #ddd;
+            width: 100%;
+            font-size: 12px;
+        }
+        .tab-button.active {
+            background-color: #005D88;
+            color: white;
+            border-radius: 100px;
+        }
+        .total-data{
+            position: relative;
+        }
+        .per-2{
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        .total-1,.total-2,.total-3,.total-4{
+            padding: 15px;
+            border-radius: 15px;
+            width: 100%;
+            color: white;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        }
+        .total-1{
+            background: rgb(25,118,210);
+            background: linear-gradient(171deg, rgba(25,118,210,1) 35%, rgba(0,212,255,1) 100%);
+        }
+        .total-2{
+            background: rgb(240,83,0);
+background: linear-gradient(171deg, rgba(240,83,0,1) 35%, rgba(255,186,0,1) 100%);
+            
+        }
+        .total-3{
+            background: rgb(0,202,138);
+            background: linear-gradient(171deg, rgba(0,202,138,1) 35%, rgba(0,255,91,1) 100%);
+        }
+        .total-4{
+            background: rgb(240,0,0);
+background: linear-gradient(171deg, rgba(240,0,0,1) 35%, rgba(255,0,84,1) 100%);
+        }
+        .transaksi-icon {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.total-1 img,
+.total-2 img,
+.total-3 img,
+.total-4 img {
+    width: 80px;
+    opacity: .1;
+    position: absolute;
+    left: -20px;
+    bottom: -20px;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(260deg) brightness(101%) contrast(103%);
+}
+.total-1 h5, .total-2 h5, .total-3 h5, .total-4 h5 {
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;
+}
+
+.total-1 p, .total-2 p, .total-3 p, .total-4 p {
+    font-size: 11px;
+    font-weight: bold;
+    color: #f1f1f1;
+    text-align: center;
+    opacity: .7;
+    margin:0px;
+    text-transform: uppercase;
+}
+
+        .transaksi-icon img{
+            width: 45px;
+            padding: 4px;
+            background: white;
+            border-radius: 100px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        }
+        header{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: #005D88;
+            z-index: -1;
+        }
+        .wad-top{
+            background: white;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 15px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+        }
+        .store-container {
+  line-height:0;
+  margin: 50px auto;
+  width: 50%;
+}
+.stroke {
+  stroke: #005D88;
+  stroke-width: 5;
+  stroke-linejoin: round;
+  stroke-miterlimit: 10;
+}
+.round-end {
+  stroke-linecap: round;
+}
+#store {
+  animation: fadeIn 0.8s ease-in;
+}
+.border-animation {
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+}
+.border-animation:after {
+  content: "";
+  background: linear-gradient(45deg, #ccc 48.9%, #005D88 49%);
+  background-size: 300% 300%;
+  border-radius: 10px;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  height: calc(100% + 10px);
+  width: calc(100% + 10px);
+  z-index: -1;
+  animation: borderGradient 8s linear both infinite;
+}
+@keyframes borderGradient {
+  0%,
+  100% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+#browser {
+  transform: translateY(-100%);
+  -webkit-animation: moveDown 1.5s cubic-bezier(0.77, -0.5, 0.3, 1.5) forwards;
+  animation: moveDown 1.5s cubic-bezier(0.77, -0.5, 0.3, 1.5) forwards;
+}
+@keyframes moveDown {
+  from {
+    transform: translate(0, -100%);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+#toldo {
+  animation: fadeIn 1s 1.4s ease-in forwards;
+}
+.grass {
+  animation: fadeIn 0.5s 1.6s ease-in forwards;
+}
+#window {
+  animation: fadeIn 0.5s 1.8s ease-in forwards;
+}
+#door {
+  animation: fadeIn 0.5s 2s ease-in forwards;
+}
+#sign {
+  transform-origin: 837px 597px;
+  animation: pendulum 1.5s 2s ease-in-out alternate;
+}
+.trees {
+  animation: fadeIn 0.5s 2.2s ease-in forwards;
+}
+#toldo,
+.grass,
+#window,
+#door,
+.trees,
+.cat,
+.cat-shadow,
+.box,
+.parachute,
+.tshirt,
+.cap,
+.ball,
+#text,
+#button,
+.sky-circle,
+.sky-circle2,
+.sky-circle3 {
+  opacity: 0;
+}
+@keyframes pendulum {
+  20% {
+    transform: rotate(60deg);
+  }
+  40% {
+    transform: rotate(-40deg);
+  }
+  60% {
+    transform: rotate(20deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+}
+.cat {
+  transform-origin: 1145px 620px;
+}
+.cat-shadow {
+  transform-origin: 1115px 625px;
+}
+#store:hover .cat {
+  animation: catHi 3s 3s cubic-bezier(0.7, -0.5, 0.3, 1.4);
+}
+#store:hover .cat-shadow {
+  animation: catShadow 4s 2s cubic-bezier(0.7, -0.5, 0.3, 1.4) alternate;
+}
+@keyframes catHi {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  10%,
+  60% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes catShadow {
+  0%,
+  100% {
+    transform: translate(40px, -35px) scale(0.3);
+  }
+  10%,
+  60% {
+    opacity: 1;
+    transform: translate(-5px, 10px) scale(0.5);
+  }
+  60% {
+    opacity: 0;
+  }
+}
+.box,
+.parachute {
+  transform-origin: 430px 100px;
+  animation: moveBox 14s 4s linear forwards infinite;
+}
+.parachute {
+  animation: parachute 14s 4s linear forwards infinite;
+}
+@keyframes moveBox {
+  0% {
+    opacity: 0;
+    transform: translate(0, -150px) rotate(20deg);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(0, 100px) rotate(-15deg);
+  }
+  25% {
+    transform: translate(0, 250px) rotate(10deg);
+  }
+  30% {
+    transform: translate(0, 350px) rotate(-5deg);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(0, 570px) rotate(0deg);
+  }
+  45%,
+  100% {
+    opacity: 0;
+    transform: translate(0, 570px);
+  }
+}
+@keyframes parachute {
+  0% {
+    transform: translate(0, -150px) rotate(20deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    transform: translate(0, 100px) rotate(-15deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(0, 250px) rotate(10deg);
+  }
+  30% {
+    transform: translate(0, 350px) rotate(-5deg);
+  }
+  33% {
+    transform: translate(0, 460px) rotate(0deg) scale(0.9);
+    opacity: 1;
+  }
+  45%,
+  100% {
+    transform: translate(0, 480px);
+    opacity: 0;
+  }
+}
+.tshirt {
+  animation: fadeInOut 42s 10s ease-in forwards infinite;
+}
+.cap {
+  animation: fadeInOut 42s 24s ease-in forwards infinite;
+}
+.ball {
+  animation: fadeInOut 42s 38s ease-in forwards infinite;
+}
+#text,
+#button {
+  animation: fadeIn 1s 5s ease-in forwards;
+}
+@keyframes fadeInOut {
+  5%,
+  12% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+}
+.cloud {
+  animation: clouds 50s linear backwards infinite;
+}
+.cloud2 {
+  animation: clouds 40s 40s linear backwards infinite;
+}
+.plane {
+  animation: clouds 30s linear backwards infinite;
+  will-change: transform;
+}
+@keyframes clouds {
+  from {
+    transform: translate(-150%, 0);
+  }
+  to {
+    transform: translate(150%, 0);
+  }
+}
+.sky-circle {
+  animation: fadeInOut 10s 5s ease-in infinite;
+}
+.sky-circle2 {
+  animation: fadeInOut 12s 30s ease-in infinite;
+}
+.sky-circle3 {
+  animation: fadeInOut 8s 40s ease-in infinite;
+}
+    </style>
+</head>
+<body>
+
+    <header></header>
+    <div class="container">
+<div class="wad-top">
+        <div class="total-data">
+        <div class="per-2">
+            <div class="total-1">
+            <p>Semua</p>
+            <h5 id="total-transaksi">0</h5>
+            <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/9610479.png" alt="">
+            </div>
+
+            <div class="total-2">
+                <p>Proses </p>
+                <h5 id="count-proses">0</h5>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/6216415.png" alt="">
+            </div>
+        </div>
+
+        <span class="transaksi-icon"><img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/wp-1739410582881.png" alt=""></span>
+
+        <div class="per-2">
+            <div class="total-3">
+                <p>Sukses </p>
+                <h5 id="count-sukses">0</h5>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/711239.png" alt="">
+            </div>
+
+            <div class="total-4">
+                <p>Gagal </p>
+                <h5 id="count-gagal">0</h5>
+                <img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/660252.png" alt="">
+            </div>
+        </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" data-status="all">Semua</button>
+            <button class="tab-button" data-status="Proses">Proses</button>
+            <button class="tab-button" data-status="Sukses">Sukses</button>
+            <button class="tab-button" data-status="Gagal">Gagal</button>
+        </div>
+    </div>
+    </div>
+
+
+
+
+    <div class="container">
+        <div id="transaksi-container">
+            <div class="store-container">
+                <div class="border-animation">
+                  <svg role="img" xmlns="http://www.w3.org/2000/svg" id="store" viewBox="130 0 1230 930">
+                      <title xml:lang="en">Store animation loader</title>
+                    <defs>
+                        <filter id="f1">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="0,4" />
+                        </filter>
+                      <circle id="sky-circle" fill="none" class="stroke" cx="198.7" cy="314" r="5.5"/>
+                      <path id="cloud" fill="#FFF" class="stroke" d="M503.6 39.1c-2.9 0.2-5.8 0.7-8.5 1.4 -14.7-24.5-42.3-40-72.8-37.8 -31.2 2.2-56.9 22.4-67.6 49.7 -2.5-0.4-5-0.5-7.6-0.3 -18.5 1.3-32.5 17.4-31.2 35.9s17.4 32.5 35.9 31.2c2.3-0.2 4.6-0.6 6.8-1.2 14.1 26.5 42.9 43.6 74.8 41.3 23.1-1.6 43.2-13.1 56.4-30.1 6.3 2.5 13.2 3.6 20.4 3.1 25.7-1.8 45.1-24.1 43.3-49.9C551.6 56.7 529.3 37.3 503.6 39.1z"/>
+                      <path id="cloud2" fill="#FFF" class="stroke" transform="scale(.8)" d="M503.6 39.1c-2.9 0.2-5.8 0.7-8.5 1.4 -14.7-24.5-42.3-40-72.8-37.8 -31.2 2.2-56.9 22.4-67.6 49.7 -2.5-0.4-5-0.5-7.6-0.3 -18.5 1.3-32.5 17.4-31.2 35.9s17.4 32.5 35.9 31.2c2.3-0.2 4.6-0.6 6.8-1.2 14.1 26.5 42.9 43.6 74.8 41.3 23.1-1.6 43.2-13.1 56.4-30.1 6.3 2.5 13.2 3.6 20.4 3.1 25.7-1.8 45.1-24.1 43.3-49.9C551.6 56.7 529.3 37.3 503.6 39.1z"/>
+                      <g id="tree">
+                        <rect x="1114.2" y="721.5" fill="#FFF" class="stroke" width="22" height="127"/>
+                        <g opacity="0.4">
+                          <path fill="#0170BB" d="M1085.2 552.4c-29.4 14.7-49.5 45-49.5 80.1 0 49.4 40.1 89.5 89.5 89.5 49.4 0 89.5-40.1 89.5-89.5 0-35.2-20.3-65.6-49.8-80.2"/>
+                          <path fill="#0170BB" d="M1164.9 552.3c10-10.1 16.1-24 16.1-39.3 0-30.9-25.1-56-56-56s-56 25.1-56 56c0 15.4 6.2 29.3 16.2 39.4"/>
+                          <path fill="#0170BB" d="M1153.9 561c4-2.4 7.7-5.4 11-8.7"/>
+                          <path fill="#0170BB" d="M1104.3 545.5c-6.7 1.6-13.1 3.9-19.1 7"/>
+                        </g>
+                        <path fill="none" class="stroke round-end" d="M1085.2 552.4c-29.4 14.7-49.5 45-49.5 80.1 0 49.4 40.1 89.5 89.5 89.5 49.4 0 89.5-40.1 89.5-89.5 0-35.2-20.3-65.6-49.8-80.2"/>
+                        <path fill="none" class="stroke round-end" d="M1164.9 552.3c10-10.1 16.1-24 16.1-39.3 0-30.9-25.1-56-56-56s-56 25.1-56 56c0 15.4 6.2 29.3 16.2 39.4"/>
+                        <path fill="none" class="stroke round-end" d="M1153.9 561c4-2.4 7.7-5.4 11-8.7"/>
+                        <path fill="none" class="stroke round-end" d="M1104.3 545.5c-6.7 1.6-13.1 3.9-19.1 7"/>
+                      </g>
+                      <g id="cat">
+                        <circle fill="#0170BB" cx="1115" cy="625" r="25"></circle>
+                        <path fill="#FFF" stroke="#0170BB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M1097.1 612.3c0 0-4.5-9.3-0.3-17.7 0 0 4.5 5.6 9.3 7"/>
+                        <path fill="#FFF" stroke="#0170BB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M1140.6 612.3c0 0 4.5-9.3 0.3-17.7 0 0-4.5 5.6-9.3 7"/>
+                        <circle fill="#FFF" stroke="#0170BB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="1118.6" cy="621.7" r="23.1"/>
+                        <path fill="#ED4F43" d="M1122.4 625c0 5.3-1.4 6.3-3.8 6.3 -2.4 0-3.8-1-3.8-6.3"/>
+                        <path fill="#FFF" stroke="#0170BB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M1132.8 621.2c0 3.9-3.2 7-7 7s-7-3.2-7-7h-0.2c0 3.9-3.2 7-7 7s-7-3.2-7-7"/>
+                        <path fill="#FFF" stroke="#0170BB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M1104.7 613c0 0 0-3.1 2.8-3.8 2.9-0.8 4.2 1.7 4.2 1.7"/>
+                        <path fill="#FFF" stroke="#0170BB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M1132.6 613c0 0 0-3.1-2.8-3.8 -2.9-0.8-4.2 1.7-4.2 1.7"/>
+                        <path fill="#0170BB" d="M1118.6 622c0 0-2.9-0.8-2.9-1.9v0c0-1 0.8-1.9 1.9-1.9h2.2c1 0 1.9 0.8 1.9 1.9v0C1121.6 621.2 1118.6 622 1118.6 622z"/>
+                      </g>
+                      <g id="parachute">
+                            <path fill="#a5c7e4" d="M429.4 2.5c-36.7 0-66.3 32.4-66.3 72.4 -9.3-6.7-19.4-5.9-30.1 0C333 74.9 355 2.5 429.4 2.5"/>
+                            <path fill="#a5c7e4" d="M429.6 2.5c36.7 0 66.3 32.4 66.3 72.4 9.3-6.7 19.4-5.9 30.1 0C526 74.9 504 2.5 429.6 2.5"/>
+                            <path fill="#a5c7e4" d="M429.6 2.5c15.3 0 27.6 36.5 27.7 76 -9.3-3.9-18.5-5.9-27.7-6h-0.2c-9.2 0-18.4 2.1-27.7 6 0.1-39.5 12.4-76 27.7-76"/>
+                          <path fill="none" class="stroke" d="M401.8 78.5c0 0-13.4-14.6-38.9-3.6"/>
+                          <path fill="none" class="stroke" d="M429.4 2.5c-36.7 0-66.3 32.4-66.3 72.4 -9.3-6.7-19.4-5.9-30.1 0C333 74.9 355 2.5 429.4 2.5"/>
+                          <path fill="none" class="stroke" d="M429.6 2.5c36.7 0 66.3 32.4 66.3 72.4 9.3-6.7 19.4-5.9 30.1 0C526 74.9 504 2.5 429.6 2.5"/>
+                          <path fill="none" class="stroke" d="M429.6 2.5c15.3 0 27.6 36.5 27.7 76 -9.3-3.9-18.5-5.9-27.7-6h-0.2c-9.2 0-18.4 2.1-27.7 6 0.1-39.5 12.4-76 27.7-76"/>
+                          <path fill="none" class="stroke" d="M362.9 75l66.6 104 66-104.1c-25.5-10.9-38.9 3.6-38.9 3.6L429.5 179 401.3 78"/>
+                          <polyline fill="none" class="stroke" points="333.3 75 429.5 179 526.3 75 "/>
+                      </g>
+                        <g id="box">
+                        <rect x="356" y="47" fill="#FFF" class="stroke" width="106.2" height="86"/>
+                        <polygon fill="#FFF" class="stroke" points=" 462.2 47 356 47 403.2 31 500.1 31 "/>
+                        <polygon fill="#FFF" class="stroke" points=" 500.1 117 462.2 133 462.2 47 500.1 31 "/>
+                        <polygon opacity="0.4" fill="#0170BB" points="394.1 47 394.5 81.5 408.5 70.5 422.5 81.5 422.5 47 463.3 31 431.7 31 "/>
+                        <polygon fill="none" class="stroke" points=" 394.1 47 394.5 81.5 408.5 70.5 422.5 81.5 422.5 47 463.3 31 431.7 31 "/>
+                      </g>
+                      <path id="tshirt" fill="#FFF" class="stroke" d="M442 717h35.7c1.7 0 3-1.5 3-3.4v-59.2c0-2.6 2.2-4.4 4.3-3.6l10.4 3.8c3.8 2.2 4.5 0.7 7.1-4.7l7.3-14.5c1.6-2.8 0.7-4.6-1.9-6.9C486 611.1 464.7 608 464.7 608c-1.5 0-2.7 1.2-3 2.9 -0.7 4.8-6.7 14.6-17.4 14.6s-16.7-9.8-17.4-14.6c-0.2-1.7-1.5-2.9-3-2.9 0 0-21.3 3-43.2 20.5 -2.6 2.4-3.5 4.1-1.9 6.9l7.3 14.5c2.7 5.4 3.3 6.8 7.1 4.7l10.4-3.8c2.1-0.8 4.3 1 4.3 3.6v59.2c0 1.9 1.3 3.4 3 3.4h35.7H442z"/>
+                      <g id="cap">
+                        <path fill="#FFF" class="stroke" d="M495.9 829.4c-0.4 33-19.4 8.5-50 8.5 -31.4 0-50.4 24.5-50-8.5 0.3-27.9 0.6-62.5 50-62.5C495.5 766.9 496.2 801.5 495.9 829.4z"/>
+                        <path fill="none" class="stroke" d="M396.4 824.4c0 0 18.9-8 49.5-8s49.5 8 49.5 8"/>
+                        <ellipse fill="#0170BB" cx="445.9" cy="763.4" rx="8.5" ry="3"/>
+                        <path fill="none" class="stroke" d="M406.4 819.4c0-20.7-4.8-52 39.5-52.5 44.7-0.5 39.5 31.8 39.5 52.5"/>
+                        <line fill="none" class="stroke" x1="445.9" y1="766.4" x2="445.9" y2="816.4"/>
+                        <circle fill="#0170BB" cx="429.4" cy="777.4" r="2"/>
+                        <circle fill="#0170BB" cx="462.4" cy="777.4" r="2"/>
+                      </g>
+                      <g id="ball">
+                        <circle fill="#FFF" class="stroke" cx="446" cy="803.8" r="47.3"/>
+                        <line fill="none" class="stroke" x1="446" y1="756.8" x2="446" y2="850.8"/>
+                        <line fill="none" class="stroke" x1="493" y1="804.3" x2="399" y2="804.3"/>
+                        <path fill="none" class="stroke" d="M484.2 834c-9.1-6.3-22.8-16.4-38.2-16.4s-29.1 10-38.2 16.4"/>
+                        <path fill="none" class="stroke" d="M407.8 774.6c9.1 6.3 22.8 16.4 38.2 16.4s29.1-10 38.2-16.4"/>
+                      </g>
+                        <g id="grass">
+                          <path fill="#a5c7e4" d="M1226.5 857.5c4.7-20.9-7-33.3-20.4-41.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.6 2.8-5.7 3.6 -7.2 2.9-9.8 11.8-10.5 21 -3.7-12.9-11.1-24.1-11.1-24.1 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.8 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -8.1 5.9-14 13.6-17.5 22 -4-10-11.4-19-21.7-25.2 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -8.5 6.2-14.5 14.2-17.9 23 -3.9-10.4-11.4-19.8-22.1-26.2 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.8 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -8.1 5.9-14 13.6-17.5 22 -4-10-11.4-19-21.7-25.2 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -27.2 20.2-8.8 45.6-8.8 45.6"/>
+                          <path fill="none" class="stroke round-end" d="M1226.5 857.5c4.7-20.9-7-33.3-20.4-41.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.6 2.8-5.7 3.6 -7.2 2.9-9.8 11.8-10.5 21 -3.7-12.9-11.1-24.1-11.1-24.1 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.8 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -8.1 5.9-14 13.6-17.5 22 -4-10-11.4-19-21.7-25.2 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -8.5 6.2-14.5 14.2-17.9 23 -3.9-10.4-11.4-19.8-22.1-26.2 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.8 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -8.1 5.9-14 13.6-17.5 22 -4-10-11.4-19-21.7-25.2 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -11 8-17.9 19.2-20.2 31.2 -2.6-13.7-11-26.3-24.4-34.3 -2-1.2-4-2.2-6.1-3.1 4.6 8.1 4.6 18.2-1 26.5 -1.3 1.9-2.7 3.5-4.4 5 -1.9-5.6-4.8-11.1-8.9-16 -5.7-6.9-12.9-12.1-20.9-15.4 6.6 10.9 4 24.9-6.5 33 -10.1-7.4-13.4-20.4-8.2-31.3 -7.6 4-14.3 9.8-19.3 17.2 -3.2 4.8-5.5 9.8-6.9 15 -2-1.4-3.8-3.1-5.4-5 -6.4-7.8-7.4-17.8-3.6-26.3 -2 1.1-3.9 2.3-5.7 3.6 -27.2 20.2-8.8 45.6-8.8 45.6"/>
+                        </g>
+                        <g id="plane">
+                          <path fill="#FFF" class="stroke" d="M966.1 203.5c0 0 70.8 0.9 70.8 10.7 0 20.6-23.3 41.3-88.7 43 -34 0.9-98.5 3.6-120-1.8 -30.5-7.6-109.1-44-112-52.8 -13.4-41.2-18.8-49.3 2.7-49.3 12 0 18.6 0 26 0 14.3 0 12.5 2.7 27.8 42.1 0 0 50.2 8.1 66.3-1.8s24.6-23.3 57.6-23.4l21 0.1C938.5 171.3 949.5 176.3 966.1 203.5z"/>
+                          <path fill="#a5c7e4" d="M896.5 182.4v18c0 1.1-0.9 2-2 2h-39.6c-1.8 0-2.7-2.1-1.5-3.4 5.7-6 19.6-17.9 41-18.6C895.5 180.3 896.5 181.2 896.5 182.4z"/>
+                          <path fill="#a5c7e4" d="M906.5 182.4v18c0 1.1 0.9 2 2 2h39.6c1.8 0 2.4-1.9 1.5-3.4 -6.1-9.6-12.1-18.6-41-18.6C907.4 180.4 906.5 181.2 906.5 182.4z"/>
+                          <path fill="none" class="stroke" d="M896.5 182.4v18c0 1.1-0.9 2-2 2h-39.6c-1.8 0-2.7-2.1-1.5-3.4 5.7-6 19.6-17.9 41-18.6C895.5 180.3 896.5 181.2 896.5 182.4z"/>
+                          <path fill="none" class="stroke" d="M906.5 182.4v18c0 1.1 0.9 2 2 2h39.6c1.8 0 2.4-1.9 1.5-3.4 -6.1-9.6-12.1-18.6-41-18.6C907.4 180.4 906.5 181.2 906.5 182.4z"/>
+                          <path fill="#a5c7e4" d="M745.3 193.7h-58.2c-3.7 0-6.7-3-6.7-6.7v0c0-3.7 3-6.7 6.7-6.7h58.2c3.7 0 6.7 3 6.7 6.7v0C752 190.6 749 193.7 745.3 193.7z"/>
+                          <g id="helix">
+                            <path fill="#0170BB" d="M1037.8 233.5h-1.8c-4.2 0-3.1-12.1-3.1-12.1s-1.1-12.1 3.1-12.1l0 0c5.2 0 9.4 4.2 9.4 9.4v7.2C1045.4 230.1 1041.9 233.5 1037.8 233.5z"/>
+                            <path fill="#a5c7e4" d="M1037.2 214.4L1037.2 214.4c-4.6 0-8.3-34-8.3-34 0-4.6 3.8-8.3 8.3-8.3h0c4.6 0 8.3 3.8 8.3 8.3C1045.6 180.3 1041.8 214.4 1037.2 214.4z"/>
+                            <path fill="#a5c7e4" d="M1037.2 228.5L1037.2 228.5c4.6 0 8.3 34 8.3 34 0 4.6-3.8 8.3-8.3 8.3h0c-4.6 0-8.3-3.8-8.3-8.3C1028.9 262.5 1032.7 228.5 1037.2 228.5z"/>
+                            <path fill="none" class="stroke" d="M1037.2 214.4L1037.2 214.4c-4.6 0-8.3-34-8.3-34 0-4.6 3.8-8.3 8.3-8.3h0c4.6 0 8.3 3.8 8.3 8.3C1045.6 180.3 1041.8 214.4 1037.2 214.4z"/>
+                            <path fill="none" class="stroke" d="M1037.2 228.5L1037.2 228.5c4.6 0 8.3 34 8.3 34 0 4.6-3.8 8.3-8.3 8.3h0c-4.6 0-8.3-3.8-8.3-8.3C1028.9 262.5 1032.7 228.5 1037.2 228.5z"/>
+                        </g>
+                            <use class="helix" xlink:href="#helix" filter="url(#f1)"></use>
+                          <line fill="none" class="stroke" x1="728" y1="213.3" x2="520" y2="213.2"/>
+                          <polyline fill="none" class="stroke" points="520 182.8 558.5 214.2 520 243.7 "/>
+                          <path fill="#FFF" class="stroke" d="M506.9 253.6H21.2c-6.6 0-12-5.4-12-12v-56.7c0-6.6 5.4-12 12-12h485.8c6.6 0 12 5.4 12 12v56.7C518.9 248.2 513.5 253.6 506.9 253.6z"/>
+                          <text transform="matrix(1.0027 0 0 1 44.8218 224.8768)" font-family='Fredoka One' font-size="34" fill="#0170BB"> We are building your store </text>
+                          <path fill="#a5c7e4" d="M850.5 216.5h79.7l-4.5 10.7c0 0-2.7 7.2-9.9 7.2h-72.6c0 0-6.3-0.9-1.8-7.2L850.5 216.5z"/>
+                          <path fill="none" class="stroke" d="M745.3 193.7h-58.2c-3.7 0-6.7-3-6.7-6.7v0c0-3.7 3-6.7 6.7-6.7h58.2c3.7 0 6.7 3 6.7 6.7v0C752 190.6 749 193.7 745.3 193.7z"/>
+                          <path fill="none" class="stroke" d="M850.5 216.5h79.7l-4.5 10.7c0 0-2.7 7.2-9.9 7.2h-72.6c0 0-6.3-0.9-1.8-7.2L850.5 216.5z"/>
+                        </g>
+                    </defs>
+                
+                      <g id="window">
+                        <path opacity="0.4" fill="#0170BB" d="M683.6 773H368c-8.1 0-14.7-6.6-14.7-14.7V565.2c0-8.1 6.6-14.7 14.7-14.7h315.6c8.1 0 14.7 6.6 14.7 14.7v193.1C698.3 766.4 691.7 773 683.6 773z"/>
+                        <path fill="none" class="stroke" d="M683.6 773H368c-8.1 0-14.7-6.6-14.7-14.7V565.2c0-8.1 6.6-14.7 14.7-14.7h315.6c8.1 0 14.7 6.6 14.7 14.7v193.1C698.3 766.4 691.7 773 683.6 773z"/>
+                      </g>
+                          <use class="box" xlink:href="#box" x="20" y="30"></use>
+                          <use class="parachute" xlink:href="#parachute" x="20" y="-112"></use>
+                          <rect fill="white" x="320" y="310" width="665" height="238"></rect>
+                          <use class="tshirt" xlink:href="#tshirt"></use>
+                          <use class="cap" xlink:href="#cap" y="-150"></use>
+                          <use class="ball" xlink:href="#ball" y="-140"></use>
+                      <use class="sky-circle" xlink:href="#sky-circle" x="-10px" y="5"></use>
+                          <use class="sky-circle2" xlink:href="#sky-circle" x="500px" y="-125"></use>
+                          <use class="sky-circle3" xlink:href="#sky-circle" x="1000px" y="50"></use>
+                          <use class="cloud" xlink:href="#cloud2" x="0" y="10"></use>
+                          <use class="plane" xlink:href="#plane" y="-80"></use>
+                                
+                          <use class="cloud2" xlink:href="#cloud" x="0" y="130"></use>
+                          <use class="trees" xlink:href="#tree" x="40" y="0"></use>
+                      <circle class="cat-shadow" fill="#0170BB" cx="1160" cy="620" r="23"></circle>
+                          <use class="cat" xlink:href="#cat" x="15" y="5"></use>
+                      <g id="browser">
+                        <path fill="none" class="stroke" d="M972.4 847h-640c-8.2 0-15-6.8-15-15V322.5c0-8.2 6.8-15 15-15h640c8.2 0 15 6.8 15 15V832C987.4 840.3 980.7 847 972.4 847z"/>
+                        <circle opacity="0.4" fill="#ED4F43" cx="363.7" cy="349.3" r="12.3"/>
+                        <circle fill="none" class="stroke" cx="402.2" cy="349.3" r="12.3"/>
+                        <path fill="none" stroke="#0170BB" class="stroke" d="M943.5 361.5H454.1c-5.5 0-9.9-4.5-9.9-9.9V344c0-5.5 4.5-9.9 9.9-9.9h489.4c5.5 0 9.9 4.5 9.9 9.9v7.6C953.4 357.1 949 361.5 943.5 361.5z"/>
+                        <circle fill="none" class="stroke" cx="363.7" cy="349.3" r="12.3"/>
+                      </g>
+                      <g id="toldo">
+                          <polyline fill="#FFF" class="stroke round-end" points=" 277.6 468.6 317.7 391.8 987.6 391.8 1026.9 468.6 "/>
+                          <path fill="#FFF" class="stroke" d="M392.2 391.8l-31.3 79.5c0 22.7 18.4 41 41 41 22.7 0 41-18.4 41-41"/>
+                          <path fill="#FFF" class="stroke" d="M466.6 391.8l-22.3 79.5c0 22.7 18.4 41 41 41s41-18.4 41-41"/>
+                          <path id="tol" fill="#FFF" class="stroke" d="M527.6 471.2c0 22.7 18.4 41 41 41 22.7 0 41-18.4 41-41"/>
+                          <path fill="#FFF" class="stroke" d="M615.5 391.8l-4.5 79.5c0 22.7 18.4 41 41 41 22.7 0 41-18.4 41-41"/>
+                          <path fill="#FFF" class="stroke" d="M689.9 391.8l4.4 79.5c0 22.7 18.4 41 41 41s41-18.4 41-41"/>
+                          <path fill="#FFF" class="stroke" d="M859.7 471.2c0 22.7-18.4 41-41 41 -22.7 0-41-18.4-41-41l-13.3-79.5"/>
+                          <use class="tol" xlink:href="#tol" x="-250"></use>
+                          <use class="tol" xlink:href="#tol" x="334"></use>
+                          <use class="tol" xlink:href="#tol" x="417"></use>
+                          <line class="stroke round-end" x1="277" y1="470.5" x2="1027" y2="470.5"/>
+                          <line class="stroke" x1="541" y1="391.8" x2="526.5" y2="471.2"/>
+                          <line class="stroke" x1="838.8" y1="391.8" x2="860.1" y2="471.2"/>
+                          <path opacity="0.4" fill="#0170BB" d="M467.3 392.1h73.4l-14 79.5c0 22.7-18.4 41-41 41 -22.7 0-41-18.4-41-41L467.3 392.1z"/>
+                          <path opacity="0.4" fill="#0170BB" d="M615.7 392.1H690l3.5 79.5c0 22.7-18.4 41-41 41 -22.7 0-41-18.4-41-41L615.7 392.1z"/>
+                          <path opacity="0.4" fill="#0170BB" d="M765.1 392.1h73.4l21.8 79.5c0 22.7-18.4 41-41 41s-41-18.4-41-41L765.1 392.1z"/>
+                          <path opacity="0.4" fill="#0170BB" d="M913.6 392.1h73.4l40.2 79.5c0 22.7-18.4 41-41 41 -22.7 0-41-18.4-41-41L913.6 392.1z"/>
+                          <path opacity="0.4" fill="#0170BB" d="M317.9 392.1h73.4l-31.4 79.5c0 22.7-18.4 41-41 41 -22.7 0-41-18.4-41-41L317.9 392.1z"/>
+                        <line fill="none" class="stroke" x1="944.4" y1="471.6" x2="913.2" y2="392.2"/>
+                      </g>
+                      <g id="door">
+                        <path fill="none" class="stroke" d="M955.8 846V560.5c0-5.5-4.5-10-10-10H738.6c-5.5 0-10 4.5-10 10V846"/>
+                        <rect fill="#0170BB" x="730" y="700" width="225" height="15"></rect>
+                        <g id="sign">
+                          <polyline fill="none" class="stroke" points=" 800.8 672.8 842.5 601 883.6 672.8 "/>
+                          <ellipse fill="#FFF" class="stroke" cx="842.2" cy="601" rx="10" ry="10"/>
+                          <path fill="#a5c7e4" d="M909.3 740.7H775.1c-5.5 0-10-4.5-10-10v-47.9c0-5.5 4.5-10 10-10h134.2c5.5 0 10 4.5 10 10v47.9C919.3 736.2 914.8 740.7 909.3 740.7z"/>
+                          <text transform="matrix(1.0027 0 0 1 789.6294 721.7501)" fill="#FFF" font-family='Fredoka One' font-size="38"> OPEN </text>
+                          <path fill="none" class="stroke" d="M909.3 740.7H775.1c-5.5 0-10-4.5-10-10v-47.9c0-5.5 4.5-10 10-10h134.2c5.5 0 10 4.5 10 10v47.9C919.3 736.2 914.8 740.7 909.3 740.7z"/>
+                      </g>
+                      </g>
+                        <g id="button">
+                          <path opacity="0.4" fill="#0170BB" d="M650.5 725.5H547.8c-4.7 0-8.6-3.9-8.6-8.6v-18.1c0-4.7 3.9-8.6 8.6-8.6h102.7c4.7 0 8.6 3.9 8.6 8.6v18.1C659.2 721.7 655.3 725.5 650.5 725.5z"/>
+                          <path fill="none" class="stroke" d="M650.5 725.5H547.8c-4.7 0-8.6-3.9-8.6-8.6v-18.1c0-4.7 3.9-8.6 8.6-8.6h102.7c4.7 0 8.6 3.9 8.6 8.6v18.1C659.2 721.7 655.3 725.5 650.5 725.5z"/>
+                      </g>
+                        <g id="text">
+                          <line fill="none" class="stroke round-end" x1="539.2" y1="605.5" x2="652.2" y2="605.5"/>
+                          <line fill="none" class="stroke round-end" x1="539.2" y1="630.5" x2="669.2" y2="630.5"/>
+                          <line fill="none" class="stroke round-end" x1="539.2" y1="655.5" x2="619.2" y2="655.5"/>
+                       </g>
+                          <use class="grass" xlink:href="#grass" x="130" y="0"></use>
+                      <rect class="grass" x="130" y="850" fill="#a5c7e4" width="100%" height="80"></rect>
+                    </svg>
+                  </div>
+                </div>
+                <p style="text-align: center;font-size: 14px;font-weight: bold;">Memproses Data, Mohon Tunggu</p>
+        </div>
+    </div>
+
+
+<br>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const transaksiContainer = document.getElementById("transaksi-container");
+
+    
+    const token = "ISI_TOKEN_OPEN_APIMU";
+    
+
+    // Warna Status
+    const TextWarnaSukses = "#005D88";
+    const TextWarnaGagal = "red";
+    const TextWarnaProses = "orange";
+
+    // Warna Border Status
+    const BorderSukses = "#005D88";
+    const BorderGagal = "red";
+    const BorderProses = "orange";
+
+    // Icon Status
+    const IconSukses = '<img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/6785304.png" alt="Sukses" class="status-icon">';
+    const IconGagal = '<img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/399274.png" alt="Gagal" class="status-icon">';
+    const IconProses = '<img src="https://neropict.wordpress.com/wp-content/uploads/2025/02/17364079.png" alt="Proses" class="status-icon">';
+
+
+
+
+
+
+
+
+
+    
+// 
+// 
+// 
+    // Jangan Di Edit
+    const id_user = "{{id_user}}";
+    const token_user = "{{token_user}}";
+    // HAK-CIPTA
+    const NeroKode = "Wa-0877-3999-5444";
+
+// 
+// 
+// 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+(function(_0x1638ef,_0x1186ab){const _0x34bd5c=_0x27df,_0x205ec5=_0x1638ef();while(!![]){try{const _0x3bf671=-parseInt(_0x34bd5c(0x1e9))/0x1*(-parseInt(_0x34bd5c(0x1bc))/0x2)+parseInt(_0x34bd5c(0x1f9))/0x3+-parseInt(_0x34bd5c(0x1f7))/0x4*(parseInt(_0x34bd5c(0x1fc))/0x5)+-parseInt(_0x34bd5c(0x1e5))/0x6+parseInt(_0x34bd5c(0x1e2))/0x7*(-parseInt(_0x34bd5c(0x1cb))/0x8)+-parseInt(_0x34bd5c(0x1d1))/0x9+parseInt(_0x34bd5c(0x1dd))/0xa;if(_0x3bf671===_0x1186ab)break;else _0x205ec5['push'](_0x205ec5['shift']());}catch(_0xbe1551){_0x205ec5['push'](_0x205ec5['shift']());}}}(_0x12ab,0x20d49),function(_0x2069af,_0x3fff29){const _0x3f227f=_0x27df,_0x42ada9=_0x5488,_0x223cd8=_0x2069af();while(!![]){try{const _0x5c265a=-parseInt(_0x42ada9(0xf1))/0x1+parseInt(_0x42ada9(0xf5))/0x2*(-parseInt(_0x42ada9(0xef))/0x3)+parseInt(_0x42ada9(0xdb))/0x4*(parseInt(_0x42ada9(0xf2))/0x5)+parseInt(_0x42ada9(0xf0))/0x6*(parseInt(_0x42ada9(0xfa))/0x7)+-parseInt(_0x42ada9(0xfe))/0x8+-parseInt(_0x42ada9(0x104))/0x9+parseInt(_0x42ada9(0xd9))/0xa*(parseInt(_0x42ada9(0xed))/0xb);if(_0x5c265a===_0x3fff29)break;else _0x223cd8['push'](_0x223cd8['shift']());}catch(_0x169447){_0x223cd8[_0x3f227f(0x1c0)](_0x223cd8[_0x3f227f(0x1de)]());}}}(_0x55d3,0x53671));let page=0x1,hasMoreData=!![],transaksiData=[],countProses=0x0,countSukses=0x0,countGagal=0x0,totalTransaksi=0x0;(function(){const _0xfee7c6=_0x27df,_0x29a9f2=_0x5488;try{const _0xff7d5=_0x29a9f2(0xda),_0x41b14e=atob(_0xff7d5);if(typeof NeroKode===_0xfee7c6(0x1d7)||NeroKode!==_0x41b14e)throw new Error(_0x29a9f2(0x101));}catch(_0x5744f0){alert(_0x5744f0[_0x29a9f2(0x119)]);throw _0x5744f0;}}());function fetchTransactions(_0x460a6a){const _0x5bc5e4=_0x27df,_0x41e43f=_0x5488;if(!hasMoreData)return;$[_0x41e43f(0xee)]({'url':_0x41e43f(0x10b)+token+'&token_user='+token_user+_0x41e43f(0x11a)+id_user+_0x41e43f(0xea)+_0x460a6a,'method':_0x5bc5e4(0x1ef),'dataType':'json','success':function(_0x1f2c0f){const _0x21d4f6=_0x5bc5e4,_0x5c0b3a=_0x41e43f;if(!_0x1f2c0f||!_0x1f2c0f[_0x5c0b3a(0x113)]||_0x1f2c0f[_0x5c0b3a(0x113)][_0x5c0b3a(0xf3)]===0x0){hasMoreData=![];return;}_0x1f2c0f[_0x5c0b3a(0x113)][_0x5c0b3a(0x11b)](_0x133edb=>{const _0x33ba04=_0x5c0b3a;transaksiData[_0x33ba04(0xf8)](_0x133edb);}),updateTransactionCounts(),renderTransactions(_0x21d4f6(0x1e4)),fetchTransactions(_0x460a6a+0x1);}});}function _0x55d3(){const _0x46ad42=_0x27df,_0x4bd63b=[_0x46ad42(0x1cd),_0x46ad42(0x1d3),_0x46ad42(0x1f6),_0x46ad42(0x1c1),_0x46ad42(0x1fa),_0x46ad42(0x1d6),'classList',_0x46ad42(0x1df),_0x46ad42(0x1f3),_0x46ad42(0x1b8),_0x46ad42(0x1f5),_0x46ad42(0x1bb),_0x46ad42(0x1d8),_0x46ad42(0x1c3),'Sukses','\x22\x20class=\x22icon-trx\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22garis-trx-1\x22></span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22garis-trx-2\x22\x20style=\x22border-bottom:\x202px\x20solid\x20',_0x46ad42(0x1be),_0x46ad42(0x1c7),_0x46ad42(0x1ca),'1032vJaNmB',_0x46ad42(0x1fb),_0x46ad42(0x1bf),_0x46ad42(0x1c4),_0x46ad42(0x1b6),_0x46ad42(0x1e6),_0x46ad42(0x1d4),'diproses',_0x46ad42(0x1c0),_0x46ad42(0x1d9),'13748BBFWiP','toLocaleDateString',_0x46ad42(0x1db),_0x46ad42(0x1ea),_0x46ad42(0x1e7),_0x46ad42(0x1ed),_0x46ad42(0x1e3),_0x46ad42(0x1b7),_0x46ad42(0x1f8),_0x46ad42(0x1c9),'1435653pRVEko','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22color:\x20',_0x46ad42(0x1f0),_0x46ad42(0x1c8),'status_pengiriman',_0x46ad42(0x1da),_0x46ad42(0x1d7),_0x46ad42(0x1c2),'long',_0x46ad42(0x1bd),_0x46ad42(0x1e1),_0x46ad42(0x1ba),_0x46ad42(0x1e0),_0x46ad42(0x1e8),'tanggal','data',_0x46ad42(0x1d2),_0x46ad42(0x1ee),_0x46ad42(0x1d0),'all','</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</a>\x0a\x20\x20\x20\x20\x20\x20\x20\x20',_0x46ad42(0x1c5),_0x46ad42(0x1cf),'forEach',_0x46ad42(0x1d5),_0x46ad42(0x1ec),_0x46ad42(0x1f4),'toLowerCase'];return _0x55d3=function(){return _0x4bd63b;},_0x55d3();}(function(){const _0x42576d=_0x5488;try{if(typeof NeroKode===_0x42576d(0x10a)||NeroKode!==_0x42576d(0xdd))throw new Error(_0x42576d(0x101));}catch(_0x1ea62d){alert(_0x1ea62d[_0x42576d(0x119)]);throw _0x1ea62d;}}());function updateTransactionCounts(){const _0x29511b=_0x27df,_0x47956a=_0x5488;if(!hasMoreData)return;countProses=0x0,countSukses=0x0,countGagal=0x0,totalTransaksi=transaksiData[_0x47956a(0xf3)],transaksiData[_0x47956a(0x11b)](_0x3ea011=>{const _0x7ab9ff=_0x27df,_0x43878f=_0x47956a;let _0x51d284=_0x3ea011[_0x7ab9ff(0x1f2)][_0x43878f(0xdc)]();if([_0x43878f(0x116),_0x43878f(0xf7),_0x43878f(0xfc)][_0x43878f(0xf6)](_0x51d284))countProses++;else{if([_0x43878f(0xdf),_0x43878f(0x106)][_0x43878f(0xf6)](_0x51d284))countSukses++;else _0x51d284===_0x43878f(0x103)&&countGagal++;}}),document[_0x47956a(0xfd)](_0x47956a(0xe7))[_0x47956a(0xf4)]=totalTransaksi,document[_0x47956a(0xfd)](_0x47956a(0x102))[_0x47956a(0xf4)]=countProses,document[_0x29511b(0x1ea)](_0x29511b(0x1dc))[_0x47956a(0xf4)]=countSukses,document[_0x47956a(0xfd)]('count-gagal')[_0x47956a(0xf4)]=countGagal;}function _0x5488(_0x339bd6,_0x39a5df){const _0x4f25f3=_0x55d3();return _0x5488=function(_0x58149d,_0x46e4c5){_0x58149d=_0x58149d-0xd9;let _0x416d56=_0x4f25f3[_0x58149d];return _0x416d56;},_0x5488(_0x339bd6,_0x39a5df);}(function(){const _0x44e7fa=_0x27df,_0x225e13=_0x5488;try{if(typeof NeroKode===_0x225e13(0x10a)||NeroKode!==_0x225e13(0xdd))throw new Error(_0x44e7fa(0x1b7));}catch(_0x2e9516){alert(_0x2e9516[_0x44e7fa(0x1c5)]);throw _0x2e9516;}}());function _0x27df(_0x28be09,_0x61304b){const _0x12ab33=_0x12ab();return _0x27df=function(_0x27dff2,_0x1bf55b){_0x27dff2=_0x27dff2-0x1b6;let _0x48ec4c=_0x12ab33[_0x27dff2];return _0x48ec4c;},_0x27df(_0x28be09,_0x61304b);}function _0x12ab(){const _0x11d6b6=['1720szSrAv','push','nomor_pembayaran','https://openapi.bukaolshop.net/v1/user/transaksi?token=','&page=','length','message','long','ajax','div','di\x20batalkan','990TESWlH','88LoXXRr','classList','Wa-0877-3999-5444','setAttribute','&id_user=','belum\x20diproses','1129023guRAZz','Refund\x20-\x20Saldo\x20Dikembalikan',';\x22>','includes','370WEXZTt','id-ID','undefined','\x22\x20alt=\x22','transaksi','url_gambar_produk','dikirim','count-sukses','3956910FlHwKs','shift','Proses',';\x22></span>\x20<!--\x20Border\x20dinamis\x20-->\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h1>#','status_bayar','148589LajfZW','data-status','all','411516fnnVgh','578PBYXbF','2400824lxvpcX','appendChild','1zuievC','getElementById','toLowerCase','V2EtMDg3Ny0zOTk5LTU0NDQ=','createElement','link_transaksi','GET','selesai','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<a\x20href=\x22','status_pengiriman','Gagal','7508PxVGKx','total-transaksi','diterima','3056OFrEwD','count-proses','679701GAYnrm','add','187640csGZUd','1180cFxyga','textContent','PERINGATAN:\x20NeroKode\x20Telah\x20Memblokir\x20Akses\x20Script\x20Hanya\x20Bisa\x20Digunakan\x20Oleh\x201\x20Aplikasi/Ip\x20Terdaftar','nama_barang','</h1>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>','numeric','innerHTML','240098gmptTV','</h4>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22per-2\x20status-trx\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22icon\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','29953uvBtnW'];_0x12ab=function(){return _0x11d6b6;};return _0x12ab();}function renderTransactions(_0x1d3c92){const _0xfa355d=_0x5488;if(!hasMoreData)return;transaksiContainer[_0xfa355d(0xe8)]='';let _0x37ea09=new Set();transaksiData[_0xfa355d(0x11b)](_0x12dc15=>{const _0x219442=_0x27df,_0x4687a0=_0xfa355d,_0x432a11=new Date(_0x12dc15[_0x4687a0(0x112)]),_0x1efe59=_0x432a11[_0x4687a0(0xfb)](_0x4687a0(0xe2),{'weekday':_0x219442(0x1c6),'year':_0x4687a0(0x10f),'month':_0x4687a0(0x10c),'day':_0x4687a0(0x10f)});let _0x440935=_0x12dc15[_0x4687a0(0x108)][_0x4687a0(0xdc)]();if([_0x4687a0(0x116),_0x4687a0(0xf7),_0x4687a0(0xfc)][_0x4687a0(0xf6)](_0x440935))_0x440935=_0x4687a0(0xe4);else{if([_0x219442(0x1f6),_0x4687a0(0x106)][_0x4687a0(0xf6)](_0x440935))_0x440935=_0x4687a0(0xeb);else _0x440935===_0x4687a0(0x103)&&(_0x440935=_0x4687a0(0xe5));}if(_0x1d3c92!==_0x4687a0(0x117)&&_0x440935!==_0x1d3c92)return;if(!_0x37ea09['has'](_0x1efe59)){_0x37ea09[_0x219442(0x1fa)](_0x1efe59);const _0x16a425=document[_0x4687a0(0xff)](_0x4687a0(0x107));_0x16a425[_0x4687a0(0xe3)][_0x219442(0x1fa)](_0x4687a0(0x112)),_0x16a425[_0x4687a0(0xf4)]=_0x1efe59,transaksiContainer[_0x4687a0(0x111)](_0x16a425);}let _0x4ccee5=_0x12dc15[_0x4687a0(0x10e)][_0x219442(0x1eb)]()===_0x4687a0(0x103)?_0x4687a0(0x114):_0x12dc15[_0x4687a0(0x10e)],_0x29968d='',_0x9b3f2b='',_0x5c76f5='';if(_0x440935===_0x4687a0(0xeb))_0x29968d=IconSukses,_0x9b3f2b=TextWarnaSukses,_0x5c76f5=BorderSukses;else _0x440935==='Gagal'?(_0x29968d=IconGagal,_0x9b3f2b=TextWarnaGagal,_0x5c76f5=BorderGagal):(_0x29968d=IconProses,_0x9b3f2b=TextWarnaProses,_0x5c76f5=BorderProses);const _0x2cc64a=document[_0x219442(0x1ed)](_0x219442(0x1c8));_0x2cc64a[_0x219442(0x1cc)][_0x4687a0(0xe1)](_0x4687a0(0xf9)),_0x2cc64a[_0x219442(0x1ce)](_0x4687a0(0x100),_0x440935),_0x2cc64a[_0x4687a0(0xe8)]=_0x219442(0x1f1)+_0x12dc15[_0x4687a0(0x115)]+'\x22\x20target=\x22_blank\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22daftar-trx\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22'+_0x12dc15[_0x4687a0(0x109)]+_0x4687a0(0xe9)+_0x12dc15[_0x4687a0(0xe6)]+_0x4687a0(0xec)+_0x5c76f5+_0x4687a0(0x110)+_0x12dc15[_0x4687a0(0xe0)]+_0x219442(0x1b9)+_0x4ccee5+'</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h4>'+_0x12dc15[_0x4687a0(0xe6)]+_0x4687a0(0x10d)+_0x29968d+_0x4687a0(0x105)+_0x9b3f2b+_0x4687a0(0xde)+_0x440935+_0x4687a0(0x118),transaksiContainer[_0x4687a0(0x111)](_0x2cc64a);});}(function(){const _0x330c72=_0x5488;try{if(typeof NeroKode===_0x330c72(0x10a)||NeroKode!==_0x330c72(0xdd))throw new Error(_0x330c72(0x101));}catch(_0xf95e0a){alert(_0xf95e0a[_0x330c72(0x119)]);throw _0xf95e0a;}}());
+    fetchTransactions(page);
+    if (!hasMoreData) return;
+    document.querySelectorAll(".tab-button").forEach(button => {
+        button.addEventListener("click", function() {
+            document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+            const status = this.getAttribute("data-status");
+            renderTransactions(status);
+        });
+    });
+});
+
+    </script>
+
+</body>
+</html>
